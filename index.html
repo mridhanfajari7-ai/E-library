@@ -10,14 +10,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Memuat ikon Lucide -->
+    <script src="https://unpkg.com/lucide-react@latest/dist/lucide-react.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            /* Mengganti latar belakang dengan gambar hutan */
             background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
+        /* Menambahkan overlay gelap untuk kontras teks yang lebih baik */
         body::before {
             content: '';
             position: fixed;
@@ -28,10 +32,20 @@
             background-color: rgba(0, 0, 0, 0.6);
             z-index: -1;
         }
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #f1f1f1; }
-        ::-webkit-scrollbar-thumb { background: #888; border-radius: 10px; }
-        ::-webkit-scrollbar-thumb:hover { background: #555; }
+        /* Style untuk scrollbar yang lebih halus */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
         .book-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -39,8 +53,13 @@
             transform: translateY(-8px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.15);
         }
-        .modal-enter { animation: fadeIn 0.3s ease-out; }
-        .modal-leave { animation: fadeOut 0.3s ease-in; }
+        /* Animasi untuk modal */
+        .modal-enter {
+            animation: fadeIn 0.3s ease-out;
+        }
+        .modal-leave {
+            animation: fadeOut 0.3s ease-in;
+        }
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
@@ -48,6 +67,11 @@
         @keyframes fadeOut {
             from { opacity: 1; transform: scale(1); }
             to { opacity: 0; transform: scale(0.95); }
+        }
+        /* Styling untuk Navigasi Aktif */
+        .nav-link.active {
+            background-color: #4f46e5; /* indigo-600 */
+            color: white;
         }
     </style>
 </head>
@@ -66,12 +90,12 @@
                     <div>
                         <label for="username" class="sr-only">Nama Pengguna</label>
                         <input type="text" id="username" name="username" placeholder="Nama Pengguna" required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800">
                     </div>
                     <div>
                         <label for="password" class="sr-only">Kata Sandi</label>
                         <input type="password" id="password" name="password" placeholder="Kata Sandi" required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800">
                     </div>
                      <p id="loginError" class="text-sm text-red-600 hidden">Nama pengguna atau kata sandi salah.</p>
                     <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors">
@@ -94,17 +118,17 @@
                     <div>
                         <label for="regUsername" class="sr-only">Nama Pengguna</label>
                         <input type="text" id="regUsername" name="regUsername" placeholder="Nama Pengguna Baru" required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800">
                     </div>
                     <div>
                         <label for="regPassword" class="sr-only">Kata Sandi</label>
                         <input type="password" id="regPassword" name="regPassword" placeholder="Kata Sandi Baru" required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800">
                     </div>
                      <div>
                         <label for="confirmPassword" class="sr-only">Konfirmasi Kata Sandi</label>
                         <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Konfirmasi Kata Sandi" required
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800">
                     </div>
                     <p id="registerError" class="text-sm text-red-600 hidden"></p>
                     <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors">
@@ -119,34 +143,43 @@
         </div>
     </div>
 
+
     <!-- Main App Content (Initially Hidden) -->
-    <div id="app" class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 hidden flex-col min-h-screen">
+    <div id="app" class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 hidden">
 
         <!-- Header -->
         <header class="text-center mb-8 relative">
-            <h1 id="pageTitle" class="text-4xl md:text-5xl font-bold text-white mb-2">Beranda</h1>
-            <p id="welcomeMessage" class="text-lg text-gray-300"></p>
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">
+                E-Library
+            </h1>
+            <div id="userInfo" class="text-lg text-gray-300"></div>
         </header>
+
+        <!-- Main Navigation -->
+        <nav class="mb-8 p-2 bg-black/20 backdrop-blur-sm rounded-xl flex flex-wrap justify-center gap-2">
+             <button onclick="navigateTo('home')" data-page="home" class="nav-link font-semibold px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Beranda
+            </button>
+            <button onclick="navigateTo('books')" data-page="books" class="nav-link font-semibold px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
+                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+                Daftar Buku
+            </button>
+            <button onclick="navigateTo('profile')" data-page="profile" class="nav-link font-semibold px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Profil Saya
+            </button>
+        </nav>
         
-        <!-- Page Content -->
-        <main class="flex-grow pb-24">
-            <!-- Beranda Page -->
-            <div id="berandaPage">
-                <section class="mb-10 p-6 bg-white/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800">
-                    <h2 class="text-2xl font-bold mb-4">Selamat Datang di E-Library!</h2>
-                    <p>Jelajahi koleksi buku digital kami, temukan bacaan baru, dan pinjam favorit Anda kapan saja, di mana saja. Mulailah petualangan literasi Anda sekarang!</p>
-                </section>
-                <section>
-                    <h2 class="text-3xl font-bold text-white mb-6">Buku Terbaru</h2>
-                    <div id="newBooksList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-                        <!-- Daftar buku terbaru akan ditampilkan di sini -->
-                    </div>
-                </section>
+        <main>
+            <!-- Page: Beranda -->
+            <div id="page-home" class="page-content">
+                <!-- Content generated by JS -->
             </div>
 
-            <!-- Perpustakaan Page -->
-            <div id="perpustakaanPage" class="hidden">
-                 <!-- Search and Filter Section -->
+            <!-- Page: Daftar Buku -->
+            <div id="page-books" class="page-content hidden">
+                <!-- Search and Filter Section -->
                 <div class="mb-10 p-6 bg-white/90 backdrop-blur-sm rounded-2xl shadow-md">
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="relative flex-grow">
@@ -159,7 +192,6 @@
                         <div class="relative">
                             <select id="categoryFilter" class="w-full md:w-48 appearance-none pl-4 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow bg-white text-gray-800">
                                 <option value="all">Semua Kategori</option>
-                                <!-- Opsi kategori akan ditambahkan oleh JavaScript -->
                             </select>
                              <div class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-down"><path d="m6 9 6 6 6-6"/></svg>
@@ -167,109 +199,19 @@
                         </div>
                     </div>
                 </div>
-                <!-- Book List Section -->
-                <div id="bookList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8">
-                    <!-- Daftar buku akan ditampilkan di sini oleh JavaScript -->
-                </div>
+                 <!-- Book List Section -->
+                <div id="bookList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8"></div>
                 <div id="noResults" class="hidden text-center py-12">
-                     <div class="p-8 bg-white/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800 max-w-md mx-auto">
-                        <h3 class="text-2xl font-bold text-gray-800">Tidak Ditemukan</h3>
-                        <p class="text-gray-600 mt-2">Maaf, kami tidak dapat menemukan buku yang cocok dengan pencarian Anda. Coba kata kunci atau filter yang berbeda.</p>
-                    </div>
+                    <p class="text-xl text-gray-300">Buku tidak ditemukan.</p>
                 </div>
             </div>
 
-            <!-- Profil Page -->
-            <div id="profilPage" class="hidden">
-                 <div class="max-w-2xl mx-auto p-8 bg-white/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800 space-y-8">
-                    <div class="text-center">
-                        <h2 id="profileUsername" class="text-3xl font-bold"></h2>
-                        <p id="profileRole" class="text-indigo-600 capitalize"></p>
-                    </div>
-
-                    <!-- Bacaan Terakhir -->
-                    <div>
-                        <h3 class="text-xl font-bold mb-4 flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-indigo-500"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-                            Bacaan Terakhir
-                        </h3>
-                        <div id="lastReadBookContainer">
-                            <!-- Konten Bacaan Terakhir akan ditampilkan di sini -->
-                        </div>
-                    </div>
-
-                    <!-- Buku yang Sedang Dipinjam -->
-                    <div>
-                        <h3 class="text-xl font-bold mb-4 border-b pb-2 flex items-center">
-                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-indigo-500"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
-                            Buku yang Sedang Dipinjam
-                        </h3>
-                        <div id="borrowedBooksList">
-                            <!-- Daftar buku yang dipinjam akan ditampilkan di sini -->
-                        </div>
-                    </div>
-                    
-                    <!-- Pusat Penulisan (Admin Only) -->
-                    <div id="writingCenterContainer" class="hidden">
-                        <h3 class="text-xl font-bold mb-4 border-b pb-2 flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-indigo-500"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/><path d="M14.5 6.5 17.5 9.5"/></svg>
-                            Pusat Penulisan
-                        </h3>
-                        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-center">
-                            <div class="p-4 bg-gray-100 rounded-lg">
-                                <p class="text-2xl font-bold">5</p>
-                                <p class="text-sm text-gray-600">Buku Diterbitkan</p>
-                            </div>
-                            <div class="p-4 bg-gray-100 rounded-lg">
-                                <p class="text-2xl font-bold">1,200</p>
-                                <p class="text-sm text-gray-600">Total Pinjaman</p>
-                            </div>
-                            <div class="p-4 bg-gray-100 rounded-lg col-span-2 md:col-span-1">
-                                <p class="text-2xl font-bold">4.8 ★</p>
-                                <p class="text-sm text-gray-600">Rating Rata-rata</p>
-                            </div>
-                        </div>
-                         <button class="mt-4 w-full bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors">Kelola Karyamu</button>
-                    </div>
-
-                    <!-- Akun & Pengaturan -->
-                    <div>
-                        <h3 class="text-xl font-bold mb-4 border-b pb-2 flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2 text-indigo-500"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 0 2l-.15.08a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1 0-2l.15-.08a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-                            Akun & Pengaturan
-                        </h3>
-                        <div class="space-y-2">
-                            <button class="w-full text-left p-3 bg-gray-50 hover:bg-gray-100 rounded-lg flex justify-between items-center"><span>Ubah Kata Sandi</span> <span>&gt;</span></button>
-                            <button class="w-full text-left p-3 bg-gray-50 hover:bg-gray-100 rounded-lg flex justify-between items-center"><span>Preferensi Notifikasi</span> <span>&gt;</span></button>
-                            <button class="w-full text-left p-3 bg-gray-50 hover:bg-gray-100 rounded-lg flex justify-between items-center"><span>Pusat Bantuan</span> <span>&gt;</span></button>
-                        </div>
-                    </div>
-                    
-                    <button id="logoutBtn" class="w-full bg-red-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
-                        Keluar
-                    </button>
-                 </div>
+            <!-- Page: Profile -->
+            <div id="page-profile" class="page-content hidden">
+                <!-- Content generated by JS -->
             </div>
+
         </main>
-
-        <!-- Bottom Navigation -->
-        <nav id="bottomNav" class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg shadow-[0_-2px_10px_rgba(0,0,0,0.1)] z-40">
-            <div class="container mx-auto flex justify-around max-w-lg">
-                <button data-page="beranda" class="nav-btn flex-1 flex flex-col items-center justify-center py-2 text-sm transition-colors text-indigo-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-home mb-1"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                    Beranda
-                </button>
-                <button data-page="perpustakaan" class="nav-btn flex-1 flex flex-col items-center justify-center py-2 text-sm transition-colors text-gray-500 hover:text-indigo-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-library-big mb-1"><rect width="8" height="18" x="3" y="3" rx="1"/><path d="M7 3v18"/><path d="M20.4 18.9c.2.5-.1 1.1-.6 1.3l-1.9.7c-.5.2-1.1-.1-1.3-.6L11.1 5.1c-.2-.5.1-1.1.6-1.3l1.9-.7c.5-.2 1.1.1 1.3.6Z"/></svg>
-                    Perpustakaan
-                </button>
-                <button data-page="profil" class="nav-btn flex-1 flex flex-col items-center justify-center py-2 text-sm transition-colors text-gray-500 hover:text-indigo-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-circle mb-1"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
-                    Profil
-                </button>
-            </div>
-        </nav>
 
     </div>
 
@@ -282,23 +224,59 @@
     
     <!-- Modal for Admin Panel -->
     <div id="adminPanelModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-[60] hidden">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-4xl h-[90vh] flex flex-col p-8 relative modal-enter text-gray-800">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col p-8 relative modal-enter text-gray-800">
             <button onclick="closeAdminPanel()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button>
+            
             <div class="border-b border-gray-200 mb-4">
                 <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-                    <button id="tabBooks" onclick="switchTab('books')" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-indigo-500 text-indigo-600">Kelola Buku</button>
-                    <button id="tabUsers" onclick="switchTab('users')" class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">Kelola Pengguna</button>
+                    <button id="tabBooks" onclick="switchTab('books')" class="admin-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Kelola Buku</button>
+                    <button id="tabUsers" onclick="switchTab('users')" class="admin-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Kelola Pengguna</button>
+                    <button id="tabBorrowedBooks" onclick="switchTab('borrowedBooks')" class="admin-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Buku Dipinjam</button>
+                    <button id="tabBorrowHistory" onclick="switchTab('borrowHistory')" class="admin-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Riwayat Peminjaman</button>
+                    <button id="tabLoginHistory" onclick="switchTab('loginHistory')" class="admin-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">Riwayat Login</button>
                 </nav>
             </div>
-            <div id="contentBooks" class="flex-grow flex flex-col">
-                <div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-bold">Panel Admin: Kelola Buku</h2><button onclick="openBookForm()" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors flex items-center"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>Tambah Buku</button></div>
-                <div id="adminBookList" class="flex-grow overflow-y-auto pr-2"></div>
-            </div>
-            <div id="contentUsers" class="hidden flex-grow flex flex-col">
-                 <div class="flex justify-between items-center mb-6"><h2 class="text-2xl font-bold">Panel Admin: Daftar Pengguna</h2></div>
-                <div id="adminUserList" class="flex-grow overflow-y-auto pr-2"></div>
+            
+            <div class="flex-grow overflow-y-auto">
+                <!-- Content for Books Tab -->
+                <div id="contentBooks" class="admin-tab-content">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold">Panel Admin: Kelola Buku</h2>
+                        <button onclick="openBookForm()" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                            Tambah Buku
+                        </button>
+                    </div>
+                    <div id="adminBookList" class="pr-2"></div>
+                </div>
+
+                <!-- Content for Users Tab -->
+                <div id="contentUsers" class="admin-tab-content hidden">
+                     <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-2xl font-bold">Panel Admin: Daftar Pengguna</h2>
+                    </div>
+                    <div id="adminUserList" class="pr-2"></div>
+                </div>
+                
+                <!-- Content for Borrowed Books Tab -->
+                <div id="contentBorrowedBooks" class="admin-tab-content hidden">
+                    <h2 class="text-2xl font-bold mb-6">Panel Admin: Daftar Buku yang Sedang Dipinjam</h2>
+                    <div id="adminBorrowedBooksList" class="pr-2"></div>
+                </div>
+
+                <!-- Content for Borrow History Tab -->
+                <div id="contentBorrowHistory" class="admin-tab-content hidden">
+                    <h2 class="text-2xl font-bold mb-6">Panel Admin: Riwayat Peminjaman</h2>
+                    <div id="adminBorrowHistoryList" class="pr-2"></div>
+                </div>
+
+                <!-- Content for Login History Tab -->
+                <div id="contentLoginHistory" class="admin-tab-content hidden">
+                    <h2 class="text-2xl font-bold mb-6">Panel Admin: Riwayat Login</h2>
+                    <div id="adminLoginHistoryList" class="pr-2"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -306,60 +284,94 @@
     <!-- Modal for Add/Edit Book Form -->
     <div id="bookFormModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-[70] hidden">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto p-8 relative modal-enter text-gray-800">
-             <button onclick="closeBookForm()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+             <button onclick="closeBookForm()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
             <h2 id="bookFormTitle" class="text-2xl font-bold mb-6 text-center">Tambah Buku Baru</h2>
             <form id="bookForm" class="space-y-4">
                 <input type="hidden" name="id">
-                <input type="text" name="title" placeholder="Judul Buku" required class="w-full p-3 border rounded-lg">
-                <input type="text" name="author" placeholder="Penulis" required class="w-full p-3 border rounded-lg">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4"><input type="number" name="year" placeholder="Tahun Terbit" required class="w-full p-3 border rounded-lg"><input type="number" name="pages" placeholder="Jumlah Halaman" required class="w-full p-3 border rounded-lg"><input type="text" name="category" placeholder="Kategori" required class="w-full p-3 border rounded-lg"></div>
-                <div><label for="coverInput" class="block text-sm font-medium text-gray-700 mb-1">Unggah Sampul Buku</label><input type="file" id="coverInput" name="coverFile" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer"><input type="hidden" name="cover"><div class="mt-4 text-center"><img id="coverPreview" src="https://placehold.co/200x300/e2e8f0/94a3b8?text=Pratinjau+Sampul" alt="Pratinjau Sampul" class="mx-auto max-h-48 w-auto object-cover rounded-lg border shadow-sm"></div></div>
-                <div class="relative"><textarea name="summary" placeholder="Sinopsis" required class="w-full p-3 border rounded-lg h-24"></textarea><button type="button" id="generateSynopsisBtn" class="absolute bottom-2 right-2 bg-purple-600 text-white text-xs font-bold py-1 px-2 rounded-md hover:bg-purple-700 transition-colors flex items-center disabled:bg-purple-400"><span id="synopsisBtnText">Buat Sinopsis ✨</span><svg id="synopsisSpinner" class="animate-spin h-4 w-4 text-white hidden ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></button></div>
-                <button id="bookFormSubmitBtn" type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors">Tambah Buku</button>
+                <input type="text" name="title" placeholder="Judul Buku" required class="w-full p-3 border rounded-lg text-gray-800">
+                <input type="text" name="author" placeholder="Penulis" required class="w-full p-3 border rounded-lg text-gray-800">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <input type="number" name="year" placeholder="Tahun Terbit" required class="w-full p-3 border rounded-lg text-gray-800">
+                    <input type="number" name="pages" placeholder="Jumlah Halaman" required class="w-full p-3 border rounded-lg text-gray-800">
+                    <input type="text" name="category" placeholder="Kategori" required class="w-full p-3 border rounded-lg text-gray-800">
+                </div>
+                 <!-- Cover input with preview -->
+                <div>
+                    <label for="coverInput" class="block text-sm font-medium text-gray-700 mb-1">Unggah Sampul Buku</label>
+                    <input type="file" id="coverInput" name="coverFile" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
+                    <input type="hidden" name="cover">
+                    <div class="mt-4 text-center">
+                        <img id="coverPreview" src="https://placehold.co/200x300/e2e8f0/94a3b8?text=Pratinjau+Sampul" alt="Pratinjau Sampul" class="mx-auto max-h-48 w-auto object-cover rounded-lg border shadow-sm">
+                    </div>
+                </div>
+                <div class="relative">
+                    <textarea name="summary" placeholder="Sinopsis" required class="w-full p-3 border rounded-lg h-24 text-gray-800"></textarea>
+                    <button type="button" id="generateSynopsisBtn" class="absolute bottom-2 right-2 bg-purple-600 text-white text-xs font-bold py-1 px-2 rounded-md hover:bg-purple-700 transition-colors flex items-center disabled:bg-purple-400">
+                        <span id="synopsisBtnText">Buat Sinopsis ✨</span>
+                        <svg id="synopsisSpinner" class="animate-spin h-4 w-4 text-white hidden ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                    </button>
+                </div>
+                <button id="bookFormSubmitBtn" type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                    Tambah Buku
+                </button>
             </form>
         </div>
     </div>
     
+    <!-- Modal for User History (Admin View) -->
+    <div id="userHistoryModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-[75] hidden">
+        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col p-8 relative modal-enter text-gray-800">
+            <button onclick="closeUserHistoryModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+            <h2 id="userHistoryModalTitle" class="text-2xl font-bold mb-6">Riwayat Peminjaman Pengguna</h2>
+            <div id="userHistoryModalContent" class="flex-grow overflow-y-auto pr-2 space-y-3">
+                <!-- Content generated by JS -->
+            </div>
+        </div>
+    </div>
+
     <!-- Confirmation Modal for Delete -->
     <div id="confirmDeleteModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-[80] hidden">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-8 text-center modal-enter text-gray-800">
             <h3 class="text-xl font-bold mb-4">Konfirmasi Hapus</h3>
             <p id="confirmDeleteText" class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus buku ini?</p>
-            <div class="flex justify-center gap-4"><button id="cancelDeleteBtn" class="bg-gray-200 text-gray-800 font-bold py-2 px-6 rounded-lg hover:bg-gray-300">Batal</button><button id="confirmDeleteBtn" class="bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700">Hapus</button></div>
-        </div>
-    </div>
-
-    <!-- Confirmation Modal for Borrow -->
-    <div id="confirmBorrowModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-[80] hidden">
-        <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-8 text-center modal-enter text-gray-800">
-            <h3 class="text-xl font-bold mb-4">Konfirmasi Pinjam</h3>
-            <p id="confirmBorrowText" class="text-gray-600 mb-6">Apakah Anda yakin ingin meminjam buku ini?</p>
             <div class="flex justify-center gap-4">
-                <button id="cancelBorrowBtn" class="bg-gray-200 text-gray-800 font-bold py-2 px-6 rounded-lg hover:bg-gray-300">Batal</button>
-                <button id="confirmBorrowBtn" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-700">Ya, Pinjam</button>
+                <button id="cancelDeleteBtn" class="bg-gray-200 text-gray-800 font-bold py-2 px-6 rounded-lg hover:bg-gray-300">Batal</button>
+                <button id="confirmDeleteBtn" class="bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700">Hapus</button>
             </div>
         </div>
     </div>
 
     <!-- Toast Notification -->
-    <div id="toast" class="fixed bottom-20 md:bottom-5 right-5 text-white py-2 px-4 rounded-lg shadow-lg transform translate-x-[120%] transition-transform duration-500 ease-in-out z-[90]"></div>
+    <div id="toast" class="fixed bottom-5 right-5 text-white py-2 px-4 rounded-lg shadow-lg transform translate-x-[120%] transition-transform duration-500 ease-in-out z-[90]">
+        <!-- Pesan notifikasi akan muncul di sini -->
+    </div>
+
 
     <script>
         // --- STATE MANAGEMENT ---
-        let currentUser = null;
+        let currentUser = null; // { username: string, role: string }
         let bookToEditId = null;
         let bookToDeleteId = null;
-        let bookToBorrowId = null;
 
         // --- DUMMY DATA ---
-        let users = [ { username: "admin", password: "123", role: "admin" }, { username: "user", password: "123", role: "user" }];
-        let books = [
-            { id: 1, title: "Laskar Pelangi", author: "Andrea Hirata", year: 2005, pages: 529, category: "Fiksi", cover: "https://placehold.co/400x600/6366f1/ffffff?text=Laskar+Pelangi", summary: "Kisah inspiratif tentang perjuangan 10 anak dari keluarga miskin yang bersekolah di sebuah sekolah Muhammadiyah di Belitung yang penuh dengan keterbatasan.", status: "available", borrowedBy: null },
-            { id: 2, title: "Bumi Manusia", author: "Pramoedya Ananta Toer", year: 1980, pages: 535, category: "Sejarah", cover: "https://placehold.co/400x600/ec4899/ffffff?text=Bumi+Manusia", summary: "Novel ini menceritakan tentang perjalanan seorang pemuda Jawa bernama Minke di akhir abad ke-19, di tengah pusaran perubahan sosial dan politik Hindia Belanda.", status: "available", borrowedBy: null },
-            { id: 3, title: "Cantik Itu Luka", author: "Eka Kurniawan", year: 2002, pages: 480, category: "Fiksi", cover: "https://placehold.co/400x600/f59e0b/ffffff?text=Cantik+Itu+Luka", summary: "Sebuah epik keluarga yang membentang dari zaman kolonial hingga kemerdekaan, memadukan sejarah, mitos, dan kekerasan dengan gaya realisme magis.", status: "available", borrowedBy: null },
-            { id: 4, title: "Negeri 5 Menara", author: "Ahmad Fuadi", year: 2009, pages: 423, category: "Fiksi", cover: "https://placehold.co/400x600/3b82f6/ffffff?text=Negeri+5+Menara", summary: "Kisah tentang Alif, seorang anak dari Minangkabau yang merantau ke Pondok Madani di Jawa Timur dan menemukan arti persahabatan serta impian.", status: "available", borrowedBy: null },
-            { id: 5, title: "Sapiens: Riwayat Singkat Umat Manusia", author: "Yuval Noah Harari", year: 2011, pages: 443, category: "Sains", cover: "https://placehold.co/400x600/10b981/ffffff?text=Sapiens", summary: "Buku non-fiksi yang menguraikan sejarah umat manusia dari evolusi manusia purba di Zaman Batu hingga abad ke-21.", status: "available", borrowedBy: null },
+        let users = [
+            { username: "admin", password: "123", role: "admin" },
+            { username: "user", password: "123", role: "user" }
         ];
+
+        let books = [
+            { id: 1, title: "Laskar Pelangi", author: "Andrea Hirata", year: 2005, pages: 529, category: "Fiksi", cover: "https://placehold.co/400x600/6366f1/ffffff?text=Laskar+Pelangi", summary: "Kisah inspiratif tentang perjuangan 10 anak dari keluarga miskin yang bersekolah di sebuah sekolah Muhammadiyah di Belitung yang penuh dengan keterbatasan.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 2, title: "Bumi Manusia", author: "Pramoedya Ananta Toer", year: 1980, pages: 535, category: "Sejarah", cover: "https://placehold.co/400x600/ec4899/ffffff?text=Bumi+Manusia", summary: "Novel ini menceritakan tentang perjalanan seorang pemuda Jawa bernama Minke di akhir abad ke-19, di tengah pusaran perubahan sosial dan politik Hindia Belanda.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 3, title: "Cantik Itu Luka", author: "Eka Kurniawan", year: 2002, pages: 480, category: "Fiksi", cover: "https://placehold.co/400x600/f59e0b/ffffff?text=Cantik+Itu+Luka", summary: "Sebuah epik keluarga yang membentang dari zaman kolonial hingga kemerdekaan, memadukan sejarah, mitos, dan kekerasan dengan gaya realisme magis.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 6, title: "Negeri 5 Menara", author: "Ahmad Fuadi", year: 2009, pages: 423, category: "Fiksi", cover: "https://placehold.co/400x600/3b82f6/ffffff?text=Negeri+5+Menara", summary: "Kisah tentang Alif, seorang anak dari Minangkabau yang merantau ke Pondok Madani di Jawa Timur dan menemukan arti persahabatan serta impian.", status: "available", borrowedBy: null, borrowedAt: null },
+        ];
+        
+        let loginHistory = [];
+        let borrowHistory = []; // { id, username, bookId, bookTitle, borrowedAt, returnedAt }
         
         // --- DOM ELEMENTS ---
         const authOverlay = document.getElementById('authOverlay');
@@ -373,34 +385,27 @@
         const showLoginBtn = document.getElementById('showLoginBtn');
 
         const mainApp = document.getElementById('app');
-        const pageTitle = document.getElementById('pageTitle');
-        const welcomeMessage = document.getElementById('welcomeMessage');
-        const berandaPage = document.getElementById('berandaPage');
-        const perpustakaanPage = document.getElementById('perpustakaanPage');
-        const profilPage = document.getElementById('profilPage');
-        const bottomNav = document.getElementById('bottomNav');
+        const userInfo = document.getElementById('userInfo');
+        const pageContents = document.querySelectorAll('.page-content');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pageHome = document.getElementById('page-home');
+        const pageProfile = document.getElementById('page-profile');
         
-        const newBooksList = document.getElementById('newBooksList');
         const bookListComponent = document.getElementById('bookList');
         const searchInput = document.getElementById('searchInput');
         const categoryFilter = document.getElementById('categoryFilter');
         const noResultsComponent = document.getElementById('noResults');
         const bookModal = document.getElementById('bookModal');
         const modalContent = document.getElementById('modalContent');
-        const profileUsername = document.getElementById('profileUsername');
-        const profileRole = document.getElementById('profileRole');
-        const borrowedBooksList = document.getElementById('borrowedBooksList');
-        const lastReadBookContainer = document.getElementById('lastReadBookContainer');
-        const writingCenterContainer = document.getElementById('writingCenterContainer');
-        const logoutBtn = document.getElementById('logoutBtn');
         
         const adminPanelModal = document.getElementById('adminPanelModal');
         const adminBookList = document.getElementById('adminBookList');
         const adminUserList = document.getElementById('adminUserList');
-        const tabBooks = document.getElementById('tabBooks');
-        const tabUsers = document.getElementById('tabUsers');
-        const contentBooks = document.getElementById('contentBooks');
-        const contentUsers = document.getElementById('contentUsers');
+        const adminBorrowedBooksList = document.getElementById('adminBorrowedBooksList');
+        const adminBorrowHistoryList = document.getElementById('adminBorrowHistoryList');
+        const adminLoginHistoryList = document.getElementById('adminLoginHistoryList');
+        const adminTabs = document.querySelectorAll('.admin-tab');
+        const adminTabContents = document.querySelectorAll('.admin-tab-content');
         const bookFormModal = document.getElementById('bookFormModal');
         const bookForm = document.getElementById('bookForm');
         const bookFormTitle = document.getElementById('bookFormTitle');
@@ -410,25 +415,158 @@
         const confirmDeleteText = document.getElementById('confirmDeleteText');
         const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
         const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-        const confirmBorrowModal = document.getElementById('confirmBorrowModal');
-        const confirmBorrowText = document.getElementById('confirmBorrowText');
-        const cancelBorrowBtn = document.getElementById('cancelBorrowBtn');
-        const confirmBorrowBtn = document.getElementById('confirmBorrowBtn');
+
         const toast = document.getElementById('toast');
 
-        // --- GEMINI API INTEGRATION (No changes) ---
-        async function callGeminiAPI(prompt, retries = 3, delay = 1000) { const apiKey = ""; const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`; const payload = { contents: [{ parts: [{ text: prompt }] }], }; for (let i = 0; i < retries; i++) { try { const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) }); if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); } const result = await response.json(); const text = result.candidates?.[0]?.content?.parts?.[0]?.text; if (text) { return text.trim(); } else { throw new Error("No content found in API response."); } } catch (error) { console.error(`API call attempt ${i + 1} failed:`, error); if (i === retries - 1) { showToast('Gagal menghubungi AI. Coba lagi nanti.', 'error'); return null; } await new Promise(res => setTimeout(res, delay * Math.pow(2, i))); } } return null; }
-        async function generateSynopsis() { const title = bookForm.title.value; const author = bookForm.author.value; if (!title || !author) { showToast('Judul dan Penulis harus diisi terlebih dahulu.', 'error'); return; } const synopsisBtn = document.getElementById('generateSynopsisBtn'); const synopsisBtnText = document.getElementById('synopsisBtnText'); const synopsisSpinner = document.getElementById('synopsisSpinner'); const summaryTextarea = bookForm.summary; synopsisBtn.disabled = true; synopsisBtnText.textContent = ''; synopsisSpinner.classList.remove('hidden'); const prompt = `Buatkan sinopsis singkat yang menarik dalam Bahasa Indonesia untuk buku berjudul "${title}" oleh penulis "${author}". Sinopsis harus ringkas, sekitar 2-4 kalimat, dan menggugah rasa ingin tahu pembaca.`; const generatedSynopsis = await callGeminiAPI(prompt); if (generatedSynopsis) { summaryTextarea.value = generatedSynopsis; showToast('Sinopsis berhasil dibuat oleh AI!'); } synopsisBtn.disabled = false; synopsisBtnText.textContent = 'Buat Sinopsis ✨'; synopsisSpinner.classList.add('hidden'); }
-        async function getRecommendations(bookId) { const book = books.find(b => b.id === bookId); if (!book) return; const recsBtn = document.getElementById('getRecommendationsBtn'); const recsBtnText = document.getElementById('recsBtnText'); const recsSpinner = document.getElementById('recsSpinner'); const recsList = document.getElementById('recommendationsList'); recsBtn.disabled = true; recsBtnText.textContent = 'Mencari...'; recsSpinner.classList.remove('hidden'); recsList.innerHTML = ''; const prompt = `Berikan 3 rekomendasi buku dalam Bahasa Indonesia yang temanya mirip dengan buku "${book.title}" oleh ${book.author} (kategori: ${book.category}). Format jawaban sebagai daftar bernomor. Hanya berikan judul dan penulisnya. Contoh: 1. Judul Buku - Penulis`; const recommendations = await callGeminiAPI(prompt); if (recommendations) { const recsHtml = recommendations.split('\n').map(rec => { if (rec.trim()) { const parts = rec.trim().split(/\.\s*(.*)/s); if (parts.length > 1) { return `<li class="mb-1 ml-4 list-decimal">${parts[1]}</li>`; } } return ''; }).join(''); recsList.innerHTML = `<ul class="space-y-1">${recsHtml}</ul>`; document.getElementById('recommendationsContainer').classList.add('hidden'); } else { recsList.innerHTML = `<p class="text-sm text-red-500">Tidak dapat mengambil rekomendasi saat ini.</p>`; recsBtn.disabled = false; recsBtnText.textContent = 'Dapatkan Rekomendasi ✨'; recsSpinner.classList.add('hidden'); } }
+        // --- GEMINI API INTEGRATION (No changes here) ---
+        async function callGeminiAPI(prompt, retries = 3, delay = 1000) {
+            const apiKey = ""; // API key is handled by the environment
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: prompt }] }],
+            };
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+
+                    if (text) {
+                        return text.trim();
+                    } else {
+                        throw new Error("No content found in API response.");
+                    }
+                } catch (error) {
+                    console.error(`API call attempt ${i + 1} failed:`, error);
+                    if (i === retries - 1) { // If it's the last retry
+                        showToast('Gagal menghubungi AI. Coba lagi nanti.', 'error');
+                        return null;
+                    }
+                    await new Promise(res => setTimeout(res, delay * Math.pow(2, i))); // Exponential backoff
+                }
+            }
+            return null;
+        }
+
+        async function generateSynopsis() {
+            const title = bookForm.title.value;
+            const author = bookForm.author.value;
+            
+            if (!title || !author) {
+                showToast('Judul dan Penulis harus diisi terlebih dahulu.', 'error');
+                return;
+            }
+            
+            const synopsisBtn = document.getElementById('generateSynopsisBtn');
+            const synopsisBtnText = document.getElementById('synopsisBtnText');
+            const synopsisSpinner = document.getElementById('synopsisSpinner');
+            const summaryTextarea = bookForm.summary;
+
+            synopsisBtn.disabled = true;
+            synopsisBtnText.textContent = '';
+            synopsisSpinner.classList.remove('hidden');
+
+            const prompt = `Buatkan sinopsis singkat yang menarik dalam Bahasa Indonesia untuk buku berjudul "${title}" oleh penulis "${author}". Sinopsis harus ringkas, sekitar 2-4 kalimat, dan menggugah rasa ingin tahu pembaca.`;
+
+            const generatedSynopsis = await callGeminiAPI(prompt);
+            
+            if (generatedSynopsis) {
+                summaryTextarea.value = generatedSynopsis;
+                showToast('Sinopsis berhasil dibuat oleh AI!');
+            }
+
+            synopsisBtn.disabled = false;
+            synopsisBtnText.textContent = 'Buat Sinopsis ✨';
+            synopsisSpinner.classList.add('hidden');
+        }
+
+        async function getRecommendations(bookId) {
+            const book = books.find(b => b.id === bookId);
+            if (!book) return;
+
+            const recsBtn = document.getElementById('getRecommendationsBtn');
+            const recsBtnText = document.getElementById('recsBtnText');
+            const recsSpinner = document.getElementById('recsSpinner');
+            const recsList = document.getElementById('recommendationsList');
+
+            recsBtn.disabled = true;
+            recsBtnText.textContent = 'Mencari...';
+            recsSpinner.classList.remove('hidden');
+            recsList.innerHTML = '';
+
+            const prompt = `Berikan 3 rekomendasi buku dalam Bahasa Indonesia yang temanya mirip dengan buku "${book.title}" oleh ${book.author} (kategori: ${book.category}). Format jawaban sebagai daftar bernomor. Hanya berikan judul dan penulisnya. Contoh: 1. Judul Buku - Penulis`;
+            
+            const recommendations = await callGeminiAPI(prompt);
+
+            if (recommendations) {
+                const recsHtml = recommendations.split('\n').map(rec => {
+                    if (rec.trim()) {
+                        const parts = rec.trim().split(/\.\s*(.*)/s);
+                        if (parts.length > 1) {
+                            return `<li class="mb-1 ml-4 list-decimal">${parts[1]}</li>`;
+                        }
+                    }
+                    return '';
+                }).join('');
+                recsList.innerHTML = `<ul class="space-y-1">${recsHtml}</ul>`;
+                document.getElementById('recommendationsContainer').classList.add('hidden');
+            } else {
+                recsList.innerHTML = `<p class="text-sm text-red-500">Tidak dapat mengambil rekomendasi saat ini.</p>`;
+                recsBtn.disabled = false;
+                recsBtnText.textContent = 'Dapatkan Rekomendasi ✨';
+                recsSpinner.classList.add('hidden');
+            }
+        }
         window.getRecommendations = getRecommendations;
 
-        // --- AUTHENTICATION FUNCTIONS ---
-        function handleLogin(e) { e.preventDefault(); const user = users.find(u => u.username === e.target.username.value && u.password === e.target.password.value); if (user) { currentUser = { username: user.username, role: user.role }; loginError.classList.add('hidden'); updateUIForLoginState(); } else { loginError.classList.remove('hidden'); } }
-        function handleRegister(e) { e.preventDefault(); const [username, password, confirmPassword] = [e.target.regUsername.value, e.target.regPassword.value, e.target.confirmPassword.value]; if (password !== confirmPassword) { registerError.textContent = "Kata sandi tidak cocok."; registerError.classList.remove('hidden'); return; } if (users.some(u => u.username === username)) { registerError.textContent = "Nama pengguna sudah digunakan."; registerError.classList.remove('hidden'); return; } users.push({ username, password, role: 'user' }); showToast(`Akun "${username}" berhasil dibuat! Silakan masuk.`); registerForm.reset(); registerError.classList.add('hidden'); showLogin(); }
-        function handleLogout() { currentUser = null; updateUIForLoginState(); }
+
+        // --- AUTHENTICATION & HISTORY LOGGING ---
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = users.find(u => u.username === e.target.username.value && u.password === e.target.password.value);
+            if (user) {
+                currentUser = { username: user.username, role: user.role };
+                loginHistory.unshift({ username: user.username, timestamp: new Date() });
+                loginError.classList.add('hidden');
+                updateUIForLoginState();
+            } else {
+                loginError.classList.remove('hidden');
+            }
+        }
+        function handleRegister(e) {
+            e.preventDefault();
+            const [username, password, confirmPassword] = [e.target.regUsername.value, e.target.regPassword.value, e.target.confirmPassword.value];
+            if (password !== confirmPassword) {
+                registerError.textContent = "Kata sandi tidak cocok.";
+                registerError.classList.remove('hidden'); return;
+            }
+            if (users.some(u => u.username === username)) {
+                registerError.textContent = "Nama pengguna sudah digunakan.";
+                registerError.classList.remove('hidden'); return;
+            }
+            users.push({ username, password, role: 'user' });
+            showToast(`Akun "${username}" berhasil dibuat! Silakan masuk.`);
+            registerForm.reset();
+            registerError.classList.add('hidden');
+            showLogin();
+        }
+        function handleLogout() {
+            currentUser = null;
+            updateUIForLoginState();
+        }
         function showLogin() { loginContainer.classList.remove('hidden'); registerContainer.classList.add('hidden'); }
-        function showRegister() { loginContainer.classList.add('hidden'); registerContainer.classList.remove('hidden'); }
-        
+        function showRegister() { loginContainer.classList.add('hidden'); registerContainer.remove('hidden'); }
         function updateUIForLoginState() {
             const existingAdminBtn = document.getElementById('adminPanelBtn');
             if (existingAdminBtn) existingAdminBtn.remove();
@@ -436,8 +574,7 @@
             if (currentUser) {
                 authOverlay.classList.add('hidden');
                 mainApp.classList.remove('hidden');
-                mainApp.classList.add('flex'); // Add flex display
-                welcomeMessage.innerHTML = `<span class="capitalize">Selamat datang, ${currentUser.username}!</span>`;
+                userInfo.innerHTML = `<span class="capitalize">Selamat datang, ${currentUser.username}!</span> <span class="bg-gray-200 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full capitalize">${currentUser.role}</span> <button onclick="handleLogout()" class="ml-4 text-sm font-semibold text-indigo-400 hover:text-indigo-200">Keluar</button>`;
                 
                 if (currentUser.role === 'admin') {
                     const adminButton = document.createElement('button');
@@ -447,53 +584,430 @@
                     adminButton.onclick = openAdminPanel;
                     document.querySelector('header').appendChild(adminButton);
                 }
-                
-                renderBerandaPage();
-                renderProfilPage();
-                filterAndSearchBooks();
-                showPage('beranda');
-
+                navigateTo('home');
             } else {
                 mainApp.classList.add('hidden');
-                mainApp.classList.remove('flex');
                 authOverlay.classList.remove('hidden');
                 showLogin();
                 loginForm.reset();
             }
+            filterAndSearchBooks();
         }
 
-        // --- PAGE NAVIGATION ---
-        function showPage(pageId) {
-            berandaPage.classList.add('hidden');
-            perpustakaanPage.classList.add('hidden');
-            profilPage.classList.add('hidden');
-            
-            document.getElementById(pageId + 'Page').classList.remove('hidden');
-            
-            const pageTitles = { beranda: 'Beranda', perpustakaan: 'Perpustakaan', profil: 'Profil Saya' };
-            pageTitle.textContent = pageTitles[pageId] || 'E-Library';
+        // --- NAVIGATION ---
+        function navigateTo(page) {
+            pageContents.forEach(p => p.classList.add('hidden'));
+            document.getElementById(`page-${page}`).classList.remove('hidden');
 
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                if (btn.dataset.page === pageId) {
-                    btn.classList.add('text-indigo-600');
-                    btn.classList.remove('text-gray-500', 'hover:text-indigo-600');
-                } else {
-                    btn.classList.remove('text-indigo-600');
-                    btn.classList.add('text-gray-500', 'hover:text-indigo-600');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === page) {
+                    link.classList.add('active');
                 }
             });
-            window.scrollTo(0, 0); // Scroll to top on page change
+            
+            // Render content for the specific page
+            if (page === 'home') renderHomePage();
+            if (page === 'profile') renderProfilePage();
         }
+        window.navigateTo = navigateTo;
         
         // --- PAGE RENDERERS ---
-        function renderBerandaPage() {
-            const latestBooks = [...books].sort((a,b) => b.id - a.id).slice(0, 5); // Show 5 latest books by ID
-            newBooksList.innerHTML = '';
-            latestBooks.forEach(book => {
-                const statusIndicator = book.status === 'borrowed' ? `<div class="absolute top-0 left-0 bg-rose-600 text-white text-xs font-bold px-3 py-1 rounded-br-xl shadow-lg z-10">DIPINJAM</div>` : '';
+        function renderHomePage() {
+            const totalBooks = books.length;
+            const borrowedBooksCount = books.filter(b => b.status === 'borrowed').length;
+            const availableBooks = totalBooks - borrowedBooksCount;
+            const latestBooks = books.slice(0, 4); // Get first 4 books as 'latest'
+
+            pageHome.innerHTML = `
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div class="bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-md text-center text-gray-800">
+                        <h3 class="text-4xl font-bold">${totalBooks}</h3>
+                        <p class="text-gray-500">Total Buku</p>
+                    </div>
+                    <div class="bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-md text-center text-gray-800">
+                        <h3 class="text-4xl font-bold text-green-600">${availableBooks}</h3>
+                        <p class="text-gray-500">Buku Tersedia</p>
+                    </div>
+                    <div class="bg-white/90 backdrop-blur-sm p-6 rounded-2xl shadow-md text-center text-gray-800">
+                        <h3 class="text-4xl font-bold text-amber-600">${borrowedBooksCount}</h3>
+                        <p class="text-gray-500">Buku Dipinjam</p>
+                    </div>
+                </div>
+
+                <!-- Latest Books -->
+                <div>
+                    <h2 class="text-3xl font-bold mb-6 text-white">Buku Baru Ditambahkan</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                        ${latestBooks.map(book => {
+                            const statusIndicator = book.status === 'borrowed' ? `<div class="absolute top-0 left-0 bg-rose-600 text-white text-xs font-bold px-3 py-1 rounded-br-xl shadow-lg z-10">DIPINJAM</div>` : '';
+                            const imageFilter = book.status === 'borrowed' ? 'grayscale' : '';
+                            return `
+                            <div class="book-card bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer relative" onclick="openModal(${book.id})">
+                                ${statusIndicator}
+                                <img src="${book.cover}" alt="Sampul ${book.title}" class="w-full h-64 object-cover ${imageFilter}">
+                                <div class="p-4">
+                                    <h3 class="font-bold text-lg truncate text-gray-800">${book.title}</h3>
+                                    <p class="text-gray-600 text-sm">${book.author}</p>
+                                </div>
+                            </div>`;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        function renderProfilePage() {
+            const currentlyBorrowed = books.filter(b => b.status === 'borrowed' && b.borrowedBy === currentUser.username);
+            const totalBorrowedCount = borrowHistory.filter(h => h.username === currentUser.username && h.returnedAt).length;
+
+            let borrowedListHTML = '<p class="text-center text-gray-500">Anda tidak sedang meminjam buku.</p>';
+            if (currentlyBorrowed.length > 0) {
+                borrowedListHTML = currentlyBorrowed.map(book => {
+                    const borrowedDate = new Date(book.borrowedAt);
+                    const dueDate = new Date(borrowedDate);
+                    dueDate.setDate(dueDate.getDate() + 7); // Due in 7 days
+                    
+                    const now = new Date();
+                    const isOverdue = now > dueDate;
+                    const dueDateClass = isOverdue ? 'text-red-600 font-bold' : 'text-green-600';
+                    const dueDateText = isOverdue ? 'TERLAMBAT' : 'Tepat Waktu';
+
+                    return `
+                        <div class="flex flex-col sm:flex-row items-center gap-4 p-4 bg-white rounded-lg shadow-sm text-gray-800">
+                            <img src="${book.cover}" alt="${book.title}" class="w-20 h-28 object-cover rounded-md flex-shrink-0">
+                            <div class="flex-grow text-center sm:text-left">
+                                <h4 class="font-bold text-lg">${book.title}</h4>
+                                <p class="text-sm text-gray-500">oleh ${book.author}</p>
+                                <div class="text-xs mt-2 space-y-1">
+                                    <p><strong>Dipinjam:</strong> ${borrowedDate.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })}</p>
+                                    <p><strong>Batas Waktu:</strong> <span class="${dueDateClass}">${dueDate.toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' })} (${dueDateText})</span></p>
+                                </div>
+                            </div>
+                            <button onclick="toggleBorrowStatus(${book.id})" class="w-full sm:w-auto bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-600 transition-colors">
+                                Kembalikan
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            }
+            
+            pageProfile.innerHTML = `
+                <div class="p-8 bg-white/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800 max-w-4xl mx-auto">
+                    <!-- User Info Header -->
+                    <div class="text-center mb-8">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mx-auto text-indigo-500 mb-2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                        <h2 class="text-3xl font-bold capitalize">${currentUser.username}</h2>
+                        <p class="text-gray-500 capitalize">Peran: ${currentUser.role}</p>
+                        <button onclick="handleLogout()" class="mt-4 bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700 transition-colors flex items-center justify-center mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg>
+                            Keluar
+                        </button>
+                    </div>
+
+                    <!-- Stats -->
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10 text-center">
+                        <div class="bg-indigo-50 p-4 rounded-lg">
+                            <p class="text-3xl font-bold text-indigo-600">${currentlyBorrowed.length}</p>
+                            <p class="text-sm text-indigo-800">Buku Sedang Dipinjam</p>
+                        </div>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <p class="text-3xl font-bold text-green-600">${totalBorrowedCount}</p>
+                            <p class="text-sm text-green-800">Total Buku Selesai Dibaca</p>
+                        </div>
+                    </div>
+
+                    <!-- Currently Borrowed Section -->
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Buku Pinjaman Saya</h3>
+                        <div class="space-y-4">
+                            ${borrowedListHTML}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+
+        // --- ADMIN PANEL & FORMS ---
+        function openAdminPanel() { 
+            renderAdminBookList();
+            renderUserList();
+            renderAdminBorrowedBooksList();
+            renderAdminBorrowHistory();
+            renderAdminLoginHistory();
+            switchTab('books');
+            adminPanelModal.classList.remove('hidden'); 
+        }
+        function closeAdminPanel() { adminPanelModal.classList.add('hidden'); }
+        function renderAdminBookList() {
+            adminBookList.innerHTML = '';
+            books.forEach(book => {
+                let statusInfo;
+                if(book.status === 'borrowed') {
+                    const borrowedDate = new Date(book.borrowedAt);
+                    statusInfo = `<div class="mt-1 space-y-1">
+                        <span class="bg-amber-100 text-amber-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Dipinjam oleh: ${book.borrowedBy}</span>
+                        <span class="block text-xs text-gray-500">Sejak: ${borrowedDate.toLocaleDateString('id-ID')}</span>
+                    </div>`;
+                } else {
+                    statusInfo = `<div class="mt-1"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Tersedia</span></div>`;
+                }
+
+                adminBookList.innerHTML += `
+                    <div class="flex items-center gap-4 p-3 border-b last:border-b-0 hover:bg-gray-50">
+                        <img src="${book.cover}" class="w-12 h-16 object-cover rounded">
+                        <div class="flex-grow"><p class="font-bold">${book.title}</p><p class="text-sm text-gray-500">${book.author}</p>${statusInfo}</div>
+                        <div class="flex gap-2">
+                            <button onclick="openBookForm(${book.id})" class="p-2 text-blue-600 hover:bg-blue-100 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+                            <button onclick="promptDeleteBook(${book.id})" class="p-2 text-red-600 hover:bg-red-100 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                        </div>
+                    </div>`;
+            });
+        }
+        function renderUserList() {
+            adminUserList.innerHTML = `<div class="grid grid-cols-4 gap-4 font-bold p-3 bg-gray-50 border-b text-gray-700"><div>Nama Pengguna</div><div>Peran</div><div>Status</div><div>Aksi</div></div>`;
+            users.forEach(user => {
+                const status = (currentUser && currentUser.username === user.username) 
+                    ? '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-green-100 text-green-800">Online</span>'
+                    : '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-100 text-gray-800">Offline</span>';
+                
+                const actions = `
+                    <button onclick="openUserHistoryModal('${user.username}')" title="Lihat Riwayat Peminjaman" class="p-2 text-gray-500 hover:bg-gray-100 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></svg>
+                    </button>
+                `;
+
+                adminUserList.innerHTML += `
+                    <div class="grid grid-cols-4 gap-4 items-center p-3 border-b last:border-b-0 hover:bg-gray-50 text-gray-800">
+                        <div class="font-medium">${user.username}</div>
+                        <div class="capitalize text-gray-600">${user.role}</div>
+                        <div>${status}</div>
+                        <div>${actions}</div>
+                    </div>`;
+            });
+        }
+        function renderAdminBorrowedBooksList() {
+            const currentlyBorrowed = books.filter(b => b.status === 'borrowed');
+            if (currentlyBorrowed.length === 0) {
+                adminBorrowedBooksList.innerHTML = `<p class="text-center text-gray-500 p-4">Tidak ada buku yang sedang dipinjam saat ini.</p>`;
+                return;
+            }
+
+            adminBorrowedBooksList.innerHTML = `
+                <div class="grid grid-cols-5 gap-4 font-bold p-3 bg-gray-50 border-b text-gray-700 text-sm">
+                    <div>Judul Buku</div>
+                    <div>Peminjam</div>
+                    <div>Tgl. Pinjam</div>
+                    <div>Batas Waktu</div>
+                    <div>Status</div>
+                </div>
+                ${currentlyBorrowed.map(book => {
+                    const borrowedDate = new Date(book.borrowedAt);
+                    const dueDate = new Date(borrowedDate);
+                    dueDate.setDate(dueDate.getDate() + 7); // 7 day borrow period
+
+                    const isOverdue = new Date() > dueDate;
+                    const statusClass = isOverdue ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800';
+                    const statusText = isOverdue ? 'Terlambat' : 'Tepat Waktu';
+
+                    return `
+                    <div class="grid grid-cols-5 gap-4 items-center p-3 border-b last:border-b-0 hover:bg-gray-50 text-sm">
+                        <div class="font-semibold text-gray-800">${book.title}</div>
+                        <div class="text-gray-600">${book.borrowedBy}</div>
+                        <div class="text-gray-600">${borrowedDate.toLocaleDateString('id-ID')}</div>
+                        <div class="text-gray-600">${dueDate.toLocaleDateString('id-ID')}</div>
+                        <div><span class="text-xs font-medium px-2.5 py-0.5 rounded-full ${statusClass}">${statusText}</span></div>
+                    </div>
+                    `;
+                }).join('')}
+            `;
+        }
+        function renderAdminBorrowHistory() {
+            if (borrowHistory.length === 0) {
+                adminBorrowHistoryList.innerHTML = `<p class="text-center text-gray-500 p-4">Belum ada riwayat peminjaman.</p>`; return;
+            }
+            adminBorrowHistoryList.innerHTML = `
+                <div class="grid grid-cols-4 gap-4 font-bold p-3 bg-gray-50 border-b text-gray-700 text-sm">
+                    <div>Pengguna</div>
+                    <div>Judul Buku</div>
+                    <div>Waktu Pinjam</div>
+                    <div>Waktu Kembali</div>
+                </div>
+                ${borrowHistory.map(item => `
+                <div class="grid grid-cols-4 gap-4 items-center p-3 border-b last:border-b-0 hover:bg-gray-50 text-sm">
+                    <div class="font-semibold">${item.username}</div>
+                    <div class="text-gray-700">"${item.bookTitle}"</div>
+                    <div class="text-gray-500">${new Date(item.borrowedAt).toLocaleString('id-ID')}</div>
+                    <div class="text-gray-500">${item.returnedAt ? new Date(item.returnedAt).toLocaleString('id-ID') : 'Masih dipinjam'}</div>
+                </div>`).join('')}`;
+        }
+        function renderAdminLoginHistory() {
+            if (loginHistory.length === 0) {
+                adminLoginHistoryList.innerHTML = `<p class="text-center text-gray-500 p-4">Belum ada riwayat login.</p>`; return;
+            }
+            adminLoginHistoryList.innerHTML = loginHistory.map(item => `
+                <div class="flex items-center gap-4 p-3 border-b last:border-b-0 hover:bg-gray-50 text-sm">
+                    <div class="font-semibold w-1/4">${item.username}</div>
+                    <div class="flex-grow text-gray-700">berhasil masuk</div>
+                    <div class="text-gray-500 w-1/3 text-right">${item.timestamp.toLocaleString('id-ID')}</div>
+                </div>`).join('');
+        }
+        function switchTab(tabName) {
+            adminTabContents.forEach(content => content.classList.add('hidden'));
+            document.getElementById(`content${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`).classList.remove('hidden');
+            
+            adminTabs.forEach(tab => {
+                tab.classList.remove('border-indigo-500', 'text-indigo-600');
+                tab.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+            });
+            document.getElementById(`tab${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`).classList.add('border-indigo-500', 'text-indigo-600');
+        }
+        window.switchTab = switchTab;
+        
+        // --- BOOK FORM & DELETE ---
+        function openBookForm(bookId = null) {
+            bookForm.reset();
+            const coverPreview = document.getElementById('coverPreview');
+            const coverHiddenInput = bookForm.elements.cover;
+            const coverFileInput = document.getElementById('coverInput');
+            if (bookId) {
+                const book = books.find(b => b.id === bookId);
+                if (!book) {
+                    console.error(`Buku dengan ID ${bookId} tidak ditemukan.`);
+                    showToast('Gagal membuka editor: buku tidak ditemukan.', 'error');
+                    return;
+                }
+                bookToEditId = bookId;
+                bookFormTitle.textContent = 'Edit Buku';
+                bookFormSubmitBtn.textContent = 'Simpan Perubahan';
+                Object.keys(book).forEach(key => {
+                    if (bookForm.elements[key]) bookForm.elements[key].value = book[key];
+                });
+                coverHiddenInput.value = book.cover;
+                coverPreview.src = book.cover;
+            } else {
+                bookToEditId = null;
+                bookFormTitle.textContent = 'Tambah Buku Baru';
+                bookFormSubmitBtn.textContent = 'Tambah Buku';
+                coverHiddenInput.value = '';
+                coverPreview.src = 'https://placehold.co/200x300/e2e8f0/94a3b8?text=Pratinjau+Sampul';
+            }
+            coverFileInput.value = '';
+            bookFormModal.classList.remove('hidden');
+        }
+        function closeBookForm() { bookFormModal.classList.add('hidden'); }
+        function handleSaveBook(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const bookData = Object.fromEntries(formData.entries());
+            
+            if (bookToEditId) {
+                const index = books.findIndex(b => b.id === bookToEditId);
+                books[index] = { ...books[index], ...bookData, year: parseInt(bookData.year), pages: parseInt(bookData.pages) };
+                showToast(`Buku "${bookData.title}" berhasil diperbarui.`);
+            } else {
+                if (!bookData.cover) {
+                    bookData.cover = 'https://placehold.co/400x600/cccccc/333333?text=Tanpa+Sampul';
+                }
+                const newBook = { ...bookData, id: Date.now(), year: parseInt(bookData.year), pages: parseInt(bookData.pages), status: 'available', borrowedBy: null, borrowedAt: null };
+                books.unshift(newBook);
+                showToast(`Buku "${bookData.title}" berhasil ditambahkan.`);
+            }
+            
+            closeBookForm();
+            filterAndSearchBooks();
+            populateCategories();
+            renderAdminBookList();
+            renderHomePage(); // Update home page if new books are added
+        }
+        function promptDeleteBook(bookId) {
+            bookToDeleteId = bookId;
+            const book = books.find(b => b.id === bookId);
+            confirmDeleteText.innerHTML = `Apakah Anda yakin ingin menghapus buku <br> "<span class="font-bold">${book.title}</span>"?`;
+            confirmDeleteModal.classList.remove('hidden');
+        }
+        function executeDelete() {
+            const book = books.find(b => b.id === bookToDeleteId);
+            books = books.filter(b => b.id !== bookToDeleteId);
+            showToast(`Buku "${book.title}" telah dihapus.`);
+            cancelDelete();
+            filterAndSearchBooks();
+            populateCategories();
+            renderAdminBookList();
+            renderHomePage(); // Update home page on book deletion
+        }
+        function cancelDelete() {
+            bookToDeleteId = null;
+            confirmDeleteModal.classList.add('hidden');
+        }
+
+        // --- USER HISTORY MODAL (ADMIN) ---
+        function openUserHistoryModal(username) {
+            const userHistory = borrowHistory.filter(h => h.username === username);
+            const modalTitle = document.getElementById('userHistoryModalTitle');
+            const modalContent = document.getElementById('userHistoryModalContent');
+            const modal = document.getElementById('userHistoryModal');
+
+            modalTitle.textContent = `Riwayat Peminjaman: ${username}`;
+            
+            if (userHistory.length === 0) {
+                modalContent.innerHTML = `<p class="text-center text-gray-500 py-8">Pengguna ini belum memiliki riwayat peminjaman.</p>`;
+            } else {
+                modalContent.innerHTML = userHistory.map(item => {
+                    const borrowedAt = new Date(item.borrowedAt);
+                    const returnedAt = item.returnedAt ? new Date(item.returnedAt) : null;
+                    const isReturned = !!returnedAt;
+
+                    const bgColor = isReturned ? 'bg-green-50' : 'bg-amber-50';
+                    const textColor = isReturned ? 'text-green-800' : 'text-amber-800';
+                    const statusText = isReturned ? `Dikembalikan pada ${returnedAt.toLocaleString('id-ID')}` : 'Masih dipinjam';
+
+                    return `
+                        <div class="p-4 rounded-lg ${bgColor}">
+                            <div class="flex justify-between items-start">
+                               <div>
+                                    <p class="font-semibold text-gray-900">${item.bookTitle}</p>
+                                    <p class="text-sm text-gray-600">Dipinjam pada ${borrowedAt.toLocaleString('id-ID')}</p>
+                               </div>
+                               <p class="text-sm font-medium ${textColor} text-right">${statusText}</p>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeUserHistoryModal() {
+            document.getElementById('userHistoryModal').classList.add('hidden');
+        }
+
+        // --- E-LIBRARY FUNCTIONS ---
+        function renderBooks(filteredBooks) {
+            bookListComponent.innerHTML = '';
+            if (filteredBooks.length === 0) {
+                noResultsComponent.classList.remove('hidden'); bookListComponent.classList.add('hidden');
+            } else {
+                noResultsComponent.classList.add('hidden'); bookListComponent.classList.remove('hidden');
+            }
+            filteredBooks.forEach(book => {
+                const adminControls = (currentUser && currentUser.role === 'admin') ? `
+                    <div class="absolute top-2 right-2 flex gap-2 z-20">
+                        <button onclick="event.stopPropagation(); openBookForm(${book.id})" class="bg-white/80 backdrop-blur-sm p-1.5 rounded-full text-blue-600 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button>
+                        <button onclick="event.stopPropagation(); promptDeleteBook(${book.id})" class="bg-white/80 backdrop-blur-sm p-1.5 rounded-full text-red-600 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
+                    </div>` : '';
+                
+                const statusIndicator = book.status === 'borrowed' 
+                    ? `<div class="absolute top-0 left-0 bg-rose-600 text-white text-xs font-bold px-3 py-1 rounded-br-xl shadow-lg z-10">DIPINJAM</div>` 
+                    : '';
                 const imageFilter = book.status === 'borrowed' ? 'grayscale' : '';
-                newBooksList.innerHTML += `
+
+                bookListComponent.innerHTML += `
                     <div class="book-card bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer relative" onclick="openModal(${book.id})">
+                        ${adminControls}
                         ${statusIndicator}
                         <img src="${book.cover}" alt="Sampul ${book.title}" class="w-full h-64 object-cover ${imageFilter}" onerror="this.onerror=null;this.src='https://placehold.co/400x600/cccccc/333333?text=Image+Not+Found';">
                         <div class="p-4">
@@ -503,167 +1017,157 @@
                     </div>`;
             });
         }
-
-        function renderProfilPage() {
-            if (!currentUser) return;
-            profileUsername.textContent = currentUser.username;
-            profileRole.textContent = currentUser.role;
-
-            const borrowed = books.filter(b => b.borrowedBy === currentUser.username);
-
-            // Render Last Read Book
-            if (borrowed.length > 0) {
-                const lastBook = borrowed[0]; // Simplistic approach: show the first in the borrowed list
-                lastReadBookContainer.innerHTML = `
-                    <div class="bg-white rounded-lg shadow-sm p-4 flex items-center gap-4 cursor-pointer hover:bg-gray-50" onclick="openModal(${lastBook.id})">
-                        <img src="${lastBook.cover}" alt="Sampul ${lastBook.title}" class="w-16 h-24 object-cover rounded-md flex-shrink-0">
-                        <div class="overflow-hidden">
-                            <p class="font-bold truncate">${lastBook.title}</p>
-                            <p class="text-sm text-gray-500">oleh ${lastBook.author}</p>
-                            <div class="mt-2 text-xs font-semibold text-green-700">Lanjutkan Membaca &gt;</div>
-                        </div>
-                    </div>
-                `;
-            } else {
-                lastReadBookContainer.innerHTML = `<p class="text-center text-gray-500 py-4">Anda belum membaca buku apa pun.</p>`;
-            }
-
-            // Render Borrowed Books List
-            if (borrowed.length > 0) {
-                borrowedBooksList.innerHTML = borrowed.map(book => `
-                    <div class="flex items-center gap-4 p-3 border-b last:border-b-0 hover:bg-gray-50">
-                        <img src="${book.cover}" class="w-12 h-16 object-cover rounded">
-                        <div class="flex-grow">
-                            <p class="font-bold">${book.title}</p>
-                            <p class="text-sm text-gray-500">${book.author}</p>
-                        </div>
-                        <button onclick="handleReturnBookFromProfile(${book.id})" class="bg-green-100 text-green-800 font-semibold py-1 px-3 rounded-full hover:bg-green-200 text-sm">Kembalikan</button>
-                    </div>
-                `).join('');
-            } else {
-                borrowedBooksList.innerHTML = `<p class="text-center text-gray-500 py-4">Anda belum meminjam buku.</p>`;
-            }
-
-            // Render Writing Center for Admins
-            if (currentUser.role === 'admin') {
-                writingCenterContainer.classList.remove('hidden');
-            } else {
-                writingCenterContainer.classList.add('hidden');
-            }
+        function filterAndSearchBooks() {
+            if (!searchInput) return; // Guard clause
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedCategory = categoryFilter.value;
+            const filteredBooks = books.filter(book => (book.title.toLowerCase().includes(searchTerm) || book.author.toLowerCase().includes(searchTerm)) && (selectedCategory === 'all' || book.category === selectedCategory));
+            renderBooks(filteredBooks);
         }
-
-        // --- ADMIN PANEL & FORMS ---
-        function openAdminPanel() { renderAdminPanel(); renderUserList(); switchTab('books'); adminPanelModal.classList.remove('hidden'); }
-        function closeAdminPanel() { adminPanelModal.classList.add('hidden'); }
-        function renderAdminPanel() {
-            adminBookList.innerHTML = '';
-            books.forEach(book => {
-                let statusInfo = book.status === 'borrowed' ? `<div class="mt-1"><span class="bg-amber-100 text-amber-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Dipinjam oleh: ${book.borrowedBy}</span></div>` : `<div class="mt-1"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full">Tersedia</span></div>`;
-                adminBookList.innerHTML += `<div class="flex items-center gap-4 p-3 border-b last:border-b-0 hover:bg-gray-50"><img src="${book.cover}" class="w-12 h-16 object-cover rounded"><div class="flex-grow"><p class="font-bold">${book.title}</p><p class="text-sm text-gray-500">${book.author}</p>${statusInfo}</div><div class="flex gap-2"><button onclick="openBookForm(${book.id})" class="p-2 text-blue-600 hover:bg-blue-100 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button><button onclick="promptDeleteBook(${book.id})" class="p-2 text-red-600 hover:bg-red-100 rounded-full"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></div>`;
-            });
+        function populateCategories() {
+            const currentCategory = categoryFilter.value;
+            categoryFilter.innerHTML = '<option value="all">Semua Kategori</option>';
+            [...new Set(books.map(b => b.category))].sort().forEach(cat => categoryFilter.innerHTML += `<option value="${cat}">${cat}</option>`);
+            // Check if the previously selected category still exists
+            const categoryExists = [...categoryFilter.options].some(opt => opt.value === currentCategory);
+            categoryFilter.value = categoryExists ? currentCategory : 'all';
         }
-        function renderUserList() {
-            adminUserList.innerHTML = `<div class="grid grid-cols-3 gap-4 font-bold p-3 bg-gray-50 border-b text-gray-700"><div>Nama Pengguna</div><div>Peran</div><div>Status</div></div>`;
-            users.forEach(user => {
-                const isOnline = currentUser && currentUser.username === user.username;
-                const status = isOnline ? '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-green-100 text-green-800">Online</span>' : '<span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-100 text-gray-800">Offline</span>';
-                adminUserList.innerHTML += `<div class="grid grid-cols-3 gap-4 items-center p-3 border-b last:border-b-0 hover:bg-gray-50 text-gray-800"><div class="font-medium">${user.username}</div><div class="capitalize text-gray-600">${user.role}</div><div>${status}</div></div>`;
-            });
+        function showToast(message, type = 'success') {
+            toast.textContent = message;
+            toast.className = 'fixed bottom-5 right-5 text-white py-2 px-4 rounded-lg shadow-lg z-[90] transform transition-transform duration-500 ease-in-out'; // Reset classes
+            toast.classList.add(type === 'success' ? 'bg-green-500' : 'bg-red-500');
+            toast.classList.remove('translate-x-[120%]'); // Show toast
+            setTimeout(() => toast.classList.add('translate-x-[120%]'), 3000);
         }
-        function switchTab(tabName) { if (tabName === 'books') { contentBooks.classList.remove('hidden'); contentUsers.classList.add('hidden'); tabBooks.className = 'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-indigo-500 text-indigo-600'; tabUsers.className = 'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'; } else { contentUsers.classList.remove('hidden'); contentBooks.classList.add('hidden'); tabUsers.className = 'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-indigo-500 text-indigo-600'; tabBooks.className = 'whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'; } }
-        window.switchTab = switchTab;
-        function openBookForm(bookId = null) {
-            const coverPreview = document.getElementById('coverPreview');
-            const coverHiddenInput = bookForm.elements.cover;
-            const coverFileInput = document.getElementById('coverInput');
-            if (bookId) {
-                const book = books.find(b => b.id === bookId);
-                if (!book) { console.error(`Buku dengan ID ${bookId} tidak ditemukan.`); showToast('Gagal membuka editor: buku tidak ditemukan.', 'error'); return; }
-                bookToEditId = bookId;
-                bookFormTitle.textContent = 'Edit Buku';
-                bookFormSubmitBtn.textContent = 'Simpan Perubahan';
-                Object.keys(book).forEach(key => { if(bookForm.elements[key]) bookForm.elements[key].value = book[key]; });
-                coverPreview.src = book.cover;
-            } else {
-                bookForm.reset(); 
-                bookToEditId = null;
-                bookFormTitle.textContent = 'Tambah Buku Baru';
-                bookFormSubmitBtn.textContent = 'Tambah Buku';
-                coverHiddenInput.value = '';
-                coverPreview.src = 'https://placehold.co/200x300/e2e8f0/94a3b8?text=Pratinjau+Sampul';
-            }
-            coverFileInput.value = ''; 
-            bookFormModal.classList.remove('hidden');
-        }
-        function closeBookForm() { bookFormModal.classList.add('hidden'); }
-        function handleSaveBook(e) { e.preventDefault(); const formData = new FormData(e.target); const bookData = Object.fromEntries(formData.entries()); if (bookToEditId) { const index = books.findIndex(b => b.id === bookToEditId); books[index] = { ...books[index], ...bookData, year: parseInt(bookData.year), pages: parseInt(bookData.pages) }; showToast(`Buku "${bookData.title}" berhasil diperbarui.`); } else { if (!bookData.cover) { bookData.cover = 'https://placehold.co/400x600/cccccc/333333?text=Tanpa+Sampul'; } const newBook = { ...bookData, id: Date.now(), year: parseInt(bookData.year), pages: parseInt(bookData.pages), status: 'available', borrowedBy: null }; books.unshift(newBook); showToast(`Buku "${bookData.title}" berhasil ditambahkan.`); } closeBookForm(); filterAndSearchBooks(); populateCategories(); renderAdminPanel(); renderBerandaPage(); }
-        function promptDeleteBook(bookId) { bookToDeleteId = bookId; const book = books.find(b => b.id === bookId); confirmDeleteText.innerHTML = `Apakah Anda yakin ingin menghapus buku <br> "<span class="font-bold">${book.title}</span>"?`; confirmDeleteModal.classList.remove('hidden'); }
-        function executeDelete() { const book = books.find(b => b.id === bookToDeleteId); books = books.filter(b => b.id !== bookToDeleteId); showToast(`Buku "${book.title}" telah dihapus.`); cancelDelete(); filterAndSearchBooks(); populateCategories(); renderAdminPanel(); renderBerandaPage(); renderProfilPage(); }
-        function cancelDelete() { bookToDeleteId = null; confirmDeleteModal.classList.add('hidden'); }
-        
-        function promptBorrowBook(bookId) {
-            bookToBorrowId = bookId;
+        function openModal(bookId) {
             const book = books.find(b => b.id === bookId);
             if (!book) return;
-            confirmBorrowText.innerHTML = `Apakah Anda yakin ingin meminjam buku <br> "<span class="font-bold">${book.title}</span>"?`;
-            confirmBorrowModal.classList.remove('hidden');
-        }
-        window.promptBorrowBook = promptBorrowBook;
 
-        function executeBorrow() {
-            if (!bookToBorrowId) return;
-            toggleBorrowStatus(bookToBorrowId);
-            closeModal();
-            cancelBorrow();
-        }
+            let buttonText, buttonClass, buttonDisabled = false, borrowerInfo = '';
 
-        function cancelBorrow() {
-            bookToBorrowId = null;
-            confirmBorrowModal.classList.add('hidden');
-        }
+            if (book.status === 'available') {
+                buttonText = 'Pinjam Buku';
+                buttonClass = 'bg-indigo-600 hover:bg-indigo-700';
+            } else { // Book is borrowed
+                if (currentUser.role === 'admin' || currentUser.username === book.borrowedBy) {
+                    buttonText = 'Kembalikan Buku';
+                    buttonClass = 'bg-green-600 hover:bg-green-700';
+                } else {
+                    buttonText = 'Buku Sedang Dipinjam';
+                    buttonClass = 'bg-gray-400 cursor-not-allowed';
+                    buttonDisabled = true;
+                }
+                if (currentUser.role === 'admin' || currentUser.username === book.borrowedBy) {
+                     const borrowedDate = new Date(book.borrowedAt);
+                     const dueDate = new Date(borrowedDate);
+                     dueDate.setDate(dueDate.getDate() + 7);
+                     const isOverdue = new Date() > dueDate;
+                     const dueDateClass = isOverdue ? 'text-red-600 font-bold' : 'text-green-600';
+                     borrowerInfo = `<div class="mt-4 p-3 bg-amber-100 text-amber-800 rounded-lg text-sm">
+                        <p>Dipinjam oleh: <span class="font-semibold">${book.borrowedBy}</span></p>
+                        <p>Batas waktu: <span class="${dueDateClass}">${dueDate.toLocaleDateString('id-ID')}</span></p>
+                     </div>`;
+                }
+            }
+            
+            modalContent.innerHTML = `
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/3 flex-shrink-0"><img src="${book.cover}" alt="Sampul ${book.title}" class="w-full rounded-lg shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/400x600/cccccc/333333?text=Image+Not+Found';"></div>
+                <div class="md:w-2/3">
+                    <h2 class="text-3xl font-bold mb-2">${book.title}</h2>
+                    <p class="text-lg text-gray-700 mb-4">oleh ${book.author}</p>
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-2.5 py-0.5 rounded-full">${book.category}</span>
+                        <span class="bg-gray-100 text-gray-800 text-sm font-medium px-2.5 py-0.5 rounded-full">${book.year}</span>
+                        <span class="bg-gray-100 text-gray-800 text-sm font-medium px-2.5 py-0.5 rounded-full">${book.pages} halaman</span>
+                    </div>
+                    <h4 class="font-semibold text-lg mb-2">Sinopsis</h4>
+                    <p class="text-gray-600 leading-relaxed">${book.summary}</p>
+                    
+                    <div class="mt-6 pt-6 border-t">
+                        <h4 class="font-semibold text-lg mb-3">Rekomendasi Buku Serupa</h4>
+                        <div id="recommendationsContainer">
+                            <button id="getRecommendationsBtn" onclick="getRecommendations(${book.id})" class="w-full bg-teal-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors flex items-center justify-center disabled:bg-teal-400">
+                                <span id="recsBtnText">Dapatkan Rekomendasi ✨</span>
+                                <svg id="recsSpinner" class="animate-spin h-5 w-5 text-white hidden ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24" viewbox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            </button>
+                        </div>
+                        <div id="recommendationsList" class="mt-4 text-gray-600"></div>
+                    </div>
 
-        // --- E-LIBRARY FUNCTIONS ---
-        function renderBooks(filteredBooks) { bookListComponent.innerHTML = ''; if (filteredBooks.length === 0) { noResultsComponent.classList.remove('hidden'); bookListComponent.classList.add('hidden'); } else { noResultsComponent.classList.add('hidden'); bookListComponent.classList.remove('hidden'); } filteredBooks.forEach(book => { const adminControls = (currentUser && currentUser.role === 'admin') ? `<div class="absolute top-2 right-2 flex gap-2 z-20"><button onclick="event.stopPropagation(); openBookForm(${book.id})" class="bg-white/80 backdrop-blur-sm p-1.5 rounded-full text-blue-600 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg></button><button onclick="event.stopPropagation(); promptDeleteBook(${book.id})" class="bg-white/80 backdrop-blur-sm p-1.5 rounded-full text-red-600 hover:bg-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div>` : ''; const statusIndicator = book.status === 'borrowed' ? `<div class="absolute top-0 left-0 bg-rose-600 text-white text-xs font-bold px-3 py-1 rounded-br-xl shadow-lg z-10">DIPINJAM</div>` : ''; const imageFilter = book.status === 'borrowed' ? 'grayscale' : ''; bookListComponent.innerHTML += `<div class="book-card bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer relative" onclick="openModal(${book.id})">${adminControls}${statusIndicator}<img src="${book.cover}" alt="Sampul ${book.title}" class="w-full h-64 object-cover ${imageFilter}" onerror="this.onerror=null;this.src='https://placehold.co/400x600/cccccc/333333?text=Image+Not+Found';"><div class="p-4"><h3 class="font-bold text-lg truncate text-gray-800">${book.title}</h3><p class="text-gray-600 text-sm">${book.author}</p></div></div>`; }); }
-        function filterAndSearchBooks() { const searchTerm = searchInput.value.toLowerCase(); const selectedCategory = categoryFilter.value; const filteredBooks = books.filter(book => (book.title.toLowerCase().includes(searchTerm) || book.author.toLowerCase().includes(searchTerm)) && (selectedCategory === 'all' || book.category === selectedCategory)); renderBooks(filteredBooks); }
-        function populateCategories() { const currentCategory = categoryFilter.value; categoryFilter.innerHTML = '<option value="all">Semua Kategori</option>'; [...new Set(books.map(b => b.category))].sort().forEach(cat => categoryFilter.innerHTML += `<option value="${cat}">${cat}</option>`); categoryFilter.value = currentCategory; }
-        function showToast(message, type = 'success') { toast.textContent = message; toast.className = `fixed bottom-20 md:bottom-5 right-5 text-white py-2 px-4 rounded-lg shadow-lg transition-transform duration-500 ease-in-out z-[90] ${type === 'success' ? 'bg-green-500' : 'bg-red-500'}`; setTimeout(() => { toast.classList.add('translate-x-[120%]'); }, 3000); }
-        function openModal(bookId) { const book = books.find(b => b.id === bookId); if (!book) return; let buttonText, buttonClass, buttonAction, buttonDisabled = false, borrowerInfo = ''; if (book.status === 'available') { buttonText = 'Pinjam Buku'; buttonClass = 'bg-indigo-600 hover:bg-indigo-700'; buttonAction = `promptBorrowBook(${book.id})`; } else { if (currentUser.role === 'admin' || currentUser.username === book.borrowedBy) { buttonText = 'Kembalikan Buku'; buttonClass = 'bg-green-600 hover:bg-green-700'; buttonAction = `handleReturnBook(${book.id})`; } else { buttonText = 'Buku Sedang Dipinjam'; buttonClass = 'bg-gray-400 cursor-not-allowed'; buttonDisabled = true; buttonAction = ''; } if (currentUser.role === 'admin') { borrowerInfo = `<div class="mt-4 p-3 bg-amber-100 text-amber-800 rounded-lg text-sm"><p>Dipinjam oleh: <span class="font-semibold">${book.borrowedBy}</span></p></div>`; } } modalContent.innerHTML = `<button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button><div class="flex flex-col md:flex-row gap-8"><div class="md:w-1/3 flex-shrink-0"><img src="${book.cover}" alt="Sampul ${book.title}" class="w-full rounded-lg shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/400x600/cccccc/333333?text=Image+Not+Found';"></div><div class="md:w-2/3"><h2 class="text-3xl font-bold mb-2">${book.title}</h2><p class="text-lg text-gray-700 mb-4">oleh ${book.author}</p><div class="flex flex-wrap gap-2 mb-6"><span class="bg-indigo-100 text-indigo-800 text-sm font-medium px-2.5 py-0.5 rounded-full">${book.category}</span><span class="bg-gray-100 text-gray-800 text-sm font-medium px-2.5 py-0.5 rounded-full">${book.year}</span><span class="bg-gray-100 text-gray-800 text-sm font-medium px-2.5 py-0.5 rounded-full">${book.pages} halaman</span></div><h4 class="font-semibold text-lg mb-2">Sinopsis</h4><p class="text-gray-600 leading-relaxed">${book.summary}</p><div class="mt-6 pt-6 border-t"><h4 class="font-semibold text-lg mb-3">Rekomendasi Buku Serupa</h4><div id="recommendationsContainer"><button id="getRecommendationsBtn" onclick="getRecommendations(${book.id})" class="w-full bg-teal-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-teal-700 transition-colors flex items-center justify-center disabled:bg-teal-400"><span id="recsBtnText">Dapatkan Rekomendasi ✨</span><svg id="recsSpinner" class="animate-spin h-5 w-5 text-white hidden ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24" viewbox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></button></div><div id="recommendationsList" class="mt-4 text-gray-600"></div></div><div class="mt-8">${borrowerInfo}<button onclick="${buttonAction}" class="w-full text-white font-bold py-3 px-4 rounded-lg transition-colors ${buttonClass}" ${buttonDisabled ? 'disabled' : ''}>${buttonText}</button></div></div></div>`; bookModal.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
-        function closeModal() { modalContent.classList.add('modal-leave'); setTimeout(() => { bookModal.classList.add('hidden'); document.body.style.overflow = 'auto'; modalContent.classList.remove('modal-leave'); modalContent.classList.add('modal-enter'); }, 300); }
-        
-        function toggleBorrowStatus(bookId) { 
-            const book = books.find(b => b.id === bookId); 
-            if (!book) return; 
-            if (book.status === 'available') { 
-                book.status = 'borrowed'; 
-                book.borrowedBy = currentUser.username; 
-                showToast(`Anda berhasil meminjam "${book.title}"!`); 
-            } else if (book.status === 'borrowed') { 
-                if (currentUser.role === 'admin' || currentUser.username === book.borrowedBy) { 
-                    book.status = 'available'; 
-                    book.borrowedBy = null; 
-                    showToast(`Anda telah mengembalikan "${book.title}".`); 
-                } else { 
-                    showToast('Aksi ditolak: Buku ini dipinjam oleh pengguna lain.', 'error'); 
-                    return; 
-                } 
-            } 
-            filterAndSearchBooks(); 
-            renderProfilPage(); 
-            renderBerandaPage(); 
-            if (!adminPanelModal.classList.contains('hidden')) renderAdminPanel(); 
+                    <div class="mt-8">${borrowerInfo}<button onclick="toggleBorrowStatus(${book.id})" class="w-full text-white font-bold py-3 px-4 rounded-lg transition-colors ${buttonClass}" ${buttonDisabled ? 'disabled' : ''}>${buttonText}</button></div>
+                </div>
+            </div>`;
+            bookModal.classList.remove('hidden'); document.body.style.overflow = 'hidden';
         }
-        
-        function handleReturnBook(bookId) {
-            toggleBorrowStatus(bookId);
-            openModal(bookId); // Refresh the modal to show updated status
+        function closeModal() {
+            modalContent.classList.add('modal-leave');
+            setTimeout(() => {
+                bookModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                modalContent.classList.remove('modal-leave');
+                modalContent.classList.add('modal-enter');
+            }, 300);
         }
-        window.handleReturnBook = handleReturnBook;
+        function toggleBorrowStatus(bookId) {
+            const book = books.find(b => b.id === bookId);
+            if (!book) return;
 
-        function handleReturnBookFromProfile(bookId) {
-            toggleBorrowStatus(bookId);
+            if (book.status === 'available') {
+                book.status = 'borrowed';
+                book.borrowedBy = currentUser.username;
+                book.borrowedAt = new Date().toISOString();
+                // Add to history
+                borrowHistory.unshift({
+                    id: Date.now(),
+                    username: currentUser.username,
+                    bookId: book.id,
+                    bookTitle: book.title,
+                    borrowedAt: book.borrowedAt,
+                    returnedAt: null
+                });
+                showToast(`Anda berhasil meminjam "${book.title}"!`);
+            } else if (book.status === 'borrowed') {
+                if (currentUser.role === 'admin' || currentUser.username === book.borrowedBy) {
+                    book.status = 'available';
+                    book.borrowedBy = null;
+                    book.borrowedAt = null;
+                    // Update history
+                    const historyEntry = borrowHistory.find(h => h.bookId === book.id && h.returnedAt === null);
+                    if(historyEntry) {
+                        historyEntry.returnedAt = new Date().toISOString();
+                    }
+                    showToast(`Anda telah mengembalikan "${book.title}".`);
+                } else {
+                    showToast('Aksi ditolak: Buku ini dipinjam oleh pengguna lain.', 'error');
+                    return;
+                }
+            }
+            
+            filterAndSearchBooks();
+            renderHomePage(); 
+            if(document.getElementById('page-profile') && !document.getElementById('page-profile').classList.contains('hidden')) {
+                renderProfilePage(); // Update profile page if it's currently viewed
+            }
+            // Re-render the modal only if it's open
+            if(!bookModal.classList.contains('hidden')){
+                openModal(bookId); 
+            }
+            if (!adminPanelModal.classList.contains('hidden')) {
+                renderAdminBookList();
+                renderAdminBorrowedBooksList();
+            }
         }
-        window.handleReturnBookFromProfile = handleReturnBookFromProfile;
-
+        window.openBookForm = openBookForm;
+        window.closeBookForm = closeBookForm;
+        window.promptDeleteBook = promptDeleteBook;
+        window.closeAdminPanel = closeAdminPanel;
+        window.openUserHistoryModal = openUserHistoryModal;
+        window.closeUserHistoryModal = closeUserHistoryModal;
+        window.openModal = openModal;
+        window.closeModal = closeModal;
+        window.toggleBorrowStatus = toggleBorrowStatus;
 
         // --- EVENT LISTENERS ---
         loginForm.addEventListener('submit', handleLogin);
@@ -671,28 +1175,50 @@
         bookForm.addEventListener('submit', handleSaveBook);
         showRegisterBtn.addEventListener('click', showRegister);
         showLoginBtn.addEventListener('click', showLogin);
-        logoutBtn.addEventListener('click', handleLogout);
         searchInput.addEventListener('input', filterAndSearchBooks);
         categoryFilter.addEventListener('change', filterAndSearchBooks);
         bookModal.addEventListener('click', e => { if (e.target === bookModal) closeModal(); });
         adminPanelModal.addEventListener('click', e => { if (e.target === adminPanelModal) closeAdminPanel(); });
         bookFormModal.addEventListener('click', e => { if (e.target === bookFormModal) closeBookForm(); });
+        document.getElementById('userHistoryModal').addEventListener('click', e => { if (e.target.id === 'userHistoryModal') closeUserHistoryModal(); });
         confirmDeleteBtn.addEventListener('click', executeDelete);
         cancelDeleteBtn.addEventListener('click', cancelDelete);
-        confirmBorrowBtn.addEventListener('click', executeBorrow);
-        cancelBorrowBtn.addEventListener('click', cancelBorrow);
-        confirmBorrowModal.addEventListener('click', e => { if (e.target === confirmBorrowModal) cancelBorrow(); });
-        bottomNav.addEventListener('click', (e) => { const navBtn = e.target.closest('.nav-btn'); if (navBtn) { showPage(navBtn.dataset.page); } });
-        document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (!bookModal.classList.contains('hidden')) closeModal(); if (!adminPanelModal.classList.contains('hidden')) closeAdminPanel(); if (!bookFormModal.classList.contains('hidden')) closeBookForm(); if (!confirmDeleteModal.classList.contains('hidden')) cancelDelete(); if (!confirmBorrowModal.classList.contains('hidden')) cancelBorrow(); } });
-        document.getElementById('generateSynopsisBtn').addEventListener('click', generateSynopsis);
-        
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                if (!bookModal.classList.contains('hidden')) closeModal();
+                if (!adminPanelModal.classList.contains('hidden')) closeAdminPanel();
+                if (!bookFormModal.classList.contains('hidden')) closeBookForm();
+                if (!confirmDeleteModal.classList.contains('hidden')) cancelDelete();
+                if (!document.getElementById('userHistoryModal').classList.contains('hidden')) closeUserHistoryModal();
+            }
+        });
+
         // --- APP INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
             populateCategories();
+            filterAndSearchBooks();
             updateUIForLoginState();
-            const coverFileInput = document.getElementById('coverInput'); const coverHiddenInput = bookForm.elements.cover; const coverPreview = document.getElementById('coverPreview');
-            coverFileInput.addEventListener('change', (event) => { const file = event.target.files[0]; if (file) { if (file.size > 2 * 1024 * 1024) { showToast('Ukuran file sampul tidak boleh lebih dari 2MB.', 'error'); coverFileInput.value = ''; return; } const reader = new FileReader(); reader.onload = (e) => { const base64String = e.target.result; coverPreview.src = base64String; coverHiddenInput.value = base64String; }; reader.onerror = () => { showToast('Gagal membaca file gambar.', 'error'); }; reader.readAsDataURL(file); } });
-            coverPreview.onerror = () => { if (!coverPreview.src.startsWith('data:image')) { coverPreview.src = 'https://placehold.co/200x300/fecaca/991b1b?text=URL+Tidak+Valid'; } };
+
+            document.getElementById('generateSynopsisBtn').addEventListener('click', generateSynopsis);
+            const coverFileInput = document.getElementById('coverInput');
+            const coverHiddenInput = bookForm.elements.cover;
+            const coverPreview = document.getElementById('coverPreview');
+
+            coverFileInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    if (file.size > 2 * 1024 * 1024) {
+                        showToast('Ukuran file sampul tidak boleh lebih dari 2MB.', 'error');
+                        coverFileInput.value = ''; return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        coverPreview.src = e.target.result;
+                        coverHiddenInput.value = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
         });
     </script>
 
