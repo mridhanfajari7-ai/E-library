@@ -6,22 +6,25 @@
     <title>E-Library</title>
     <!-- Memuat Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Memuat Google Fonts: Inter -->
+    <!-- Memuat Google Fonts: Lora (untuk nuansa klasik) & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <!-- Memuat ikon Lucide -->
     <script src="https://unpkg.com/lucide-react@latest/dist/lucide-react.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            /* Mengganti latar belakang dengan gambar hutan */
-            background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2070&auto=format&fit=crop');
+            /* Latar belakang baru: interior perpustakaan */
+            background-image: url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
-        /* Menambahkan overlay gelap untuk kontras teks yang lebih baik */
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Lora', serif;
+        }
+        /* Overlay cokelat hangat */
         body::before {
             content: '';
             position: fixed;
@@ -29,7 +32,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(40, 25, 15, 0.7);
             z-index: -1;
         }
         /* Style untuk scrollbar yang lebih halus */
@@ -37,14 +40,14 @@
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f1f1;
+            background: #fdfaf6;
         }
         ::-webkit-scrollbar-thumb {
-            background: #888;
+            background: #a16207; /* amber-700 */
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #555;
+            background: #854d0e; /* amber-800 */
         }
         .book-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -55,10 +58,14 @@
         .book-card:nth-child(3) { animation-delay: 0.2s; }
         .book-card:nth-child(4) { animation-delay: 0.3s; }
         .book-card:nth-child(5) { animation-delay: 0.4s; }
+        .book-card:nth-child(6) { animation-delay: 0.5s; }
+        .book-card:nth-child(7) { animation-delay: 0.6s; }
+        .book-card:nth-child(8) { animation-delay: 0.7s; }
+
 
         .book-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            transform: translateY(-12px) rotate(1deg);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.2);
         }
         /* Animasi untuk modal */
         .modal-enter {
@@ -84,12 +91,32 @@
             transition: all 0.3s ease;
         }
         .nav-link:hover:not(.active) {
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, 0.1);
             transform: translateY(-2px);
         }
         .nav-link.active {
-            background-color: #4f46e5; /* indigo-600 */
+            background-color: #a16207; /* amber-700 */
             color: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        /* Gaya Rak Buku */
+        .bookshelf {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 2rem;
+            position: relative;
+        }
+        .bookshelf::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: #4e342e; /* Cokelat tua untuk rak */
+            border-radius: 4px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
         }
     </style>
 </head>
@@ -97,12 +124,12 @@
 
     <!-- Login & Register Section -->
     <div id="authOverlay" class="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center p-4 z-50 transition-opacity duration-300">
-        <div class="w-full max-w-4xl flex bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl overflow-hidden modal-enter">
+        <div class="w-full max-w-4xl flex bg-stone-50 backdrop-blur-lg rounded-2xl shadow-2xl overflow-hidden modal-enter">
             <!-- Panel Kiri (Branding) -->
-            <div class="hidden md:block md:w-1/2 bg-cover bg-center p-12 text-white flex flex-col justify-center" style="background-image: url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?q=80&w=2070&auto=format&fit=crop');">
-                <div class="bg-black/40 p-6 rounded-lg">
-                    <h2 class="text-3xl font-bold mb-3">"Buku adalah jendela dunia."</h2>
-                    <p>Masuk untuk memulai petualangan literasi Anda bersama kami.</p>
+            <div class="hidden md:block md:w-1/2 bg-cover bg-center p-12 text-white flex flex-col justify-center" style="background-image: url('https://images.unsplash.com/photo-1550399105-c4db5fb85c18?q=80&w=2071&auto=format&fit=crop');">
+                <div class="bg-black/50 p-6 rounded-lg">
+                    <h2 class="text-3xl font-bold mb-3 font-serif">"Satu buku, satu pena, satu anak, dan satu guru dapat mengubah dunia."</h2>
+                    <p class="text-stone-200">Masuk untuk memulai petualangan literasi Anda.</p>
                 </div>
             </div>
 
@@ -116,60 +143,60 @@
                     <!-- Login Form -->
                     <div id="loginContainer" class="absolute inset-0 transition-all duration-500 ease-in-out opacity-100">
                         <div class="text-center mb-6">
-                            <h1 class="text-3xl font-bold text-gray-900">Selamat Datang!</h1>
+                            <h1 class="text-3xl font-bold text-gray-900 font-serif">Selamat Datang!</h1>
                             <p class="text-gray-500 mt-2">Silakan masuk untuk melanjutkan</p>
                         </div>
                         <form id="loginForm" class="space-y-4">
                             <div>
                                 <label for="username" class="sr-only">Nama Pengguna</label>
                                 <input type="text" id="username" name="username" placeholder="Nama Pengguna" required
-                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800">
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 text-gray-800">
                             </div>
                             <div>
                                 <label for="password" class="sr-only">Kata Sandi</label>
                                 <input type="password" id="password" name="password" placeholder="Kata Sandi" required
-                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800">
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 text-gray-800">
                             </div>
                             <p id="loginError" class="text-sm text-red-600 hidden">Nama pengguna atau kata sandi salah.</p>
-                            <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors">
+                            <button type="submit" class="w-full bg-amber-700 text-white font-bold py-3 px-4 rounded-lg hover:bg-amber-800 transition-colors">
                                 Masuk
                             </button>
                         </form>
                          <p class="text-xs text-center text-gray-400 mt-4">Gunakan <span class="font-semibold">admin/123</span> atau <span class="font-semibold">user/123</span>.</p>
                         <p class="text-sm text-center text-gray-500 mt-4">
-                            Belum punya akun? <button id="showRegisterBtn" class="font-semibold text-indigo-600 hover:underline focus:outline-none">Daftar di sini</button>
+                            Belum punya akun? <button id="showRegisterBtn" class="font-semibold text-amber-700 hover:underline focus:outline-none">Daftar di sini</button>
                         </p>
                     </div>
                     
                     <!-- Register Form (Initially Hidden) -->
                     <div id="registerContainer" class="absolute inset-0 transition-all duration-500 ease-in-out opacity-0 pointer-events-none">
                         <div class="text-center mb-6">
-                             <h1 class="text-3xl font-bold text-gray-900">Buat Akun Baru</h1>
+                             <h1 class="text-3xl font-bold text-gray-900 font-serif">Buat Akun Baru</h1>
                              <p class="text-gray-500 mt-2">Bergabunglah dengan komunitas pembaca kami</p>
                         </div>
                         <form id="registerForm" class="space-y-4">
                             <div>
                                 <label for="regUsername" class="sr-only">Nama Pengguna</label>
                                 <input type="text" id="regUsername" name="regUsername" placeholder="Nama Pengguna Baru" required
-                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800">
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 text-gray-800">
                             </div>
                             <div>
                                 <label for="regPassword" class="sr-only">Kata Sandi</label>
                                 <input type="password" id="regPassword" name="regPassword" placeholder="Kata Sandi Baru" required
-                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800">
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 text-gray-800">
                             </div>
                              <div>
                                 <label for="confirmPassword" class="sr-only">Konfirmasi Kata Sandi</label>
                                 <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Konfirmasi Kata Sandi" required
-                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-800">
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-600 focus:border-amber-600 text-gray-800">
                             </div>
                             <p id="registerError" class="text-sm text-red-600 hidden"></p>
-                            <button type="submit" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors">
+                            <button type="submit" class="w-full bg-emerald-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-emerald-700 transition-colors">
                                 Daftar
                             </button>
                         </form>
                         <p class="text-sm text-center text-gray-500 mt-4">
-                            Sudah punya akun? <button id="showLoginBtn" class="font-semibold text-indigo-600 hover:underline focus:outline-none">Masuk di sini</button>
+                            Sudah punya akun? <button id="showLoginBtn" class="font-semibold text-amber-700 hover:underline focus:outline-none">Masuk di sini</button>
                         </p>
                     </div>
                 </div>
@@ -184,7 +211,7 @@
         <!-- Header -->
         <header class="text-center mb-8 relative flex flex-col items-center">
             <img src="logo.png" alt="Logo E-Library" class="w-32 h-32 mb-4 rounded-full shadow-lg">
-            <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-2 font-serif">
                 E-Library
             </h1>
             <div id="userInfo" class="text-lg text-gray-300"></div>
@@ -192,20 +219,20 @@
 
         <!-- Main Navigation -->
         <nav class="mb-8 p-2 bg-black/20 backdrop-blur-sm rounded-xl flex flex-wrap justify-center gap-2">
-             <button onclick="navigateTo('home')" data-page="home" class="nav-link font-semibold px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
+             <button onclick="navigateTo('home')" data-page="home" class="nav-link font-semibold px-4 py-2 rounded-lg flex items-center gap-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
                 Beranda
             </button>
-            <button onclick="navigateTo('books')" data-page="books" class="nav-link font-semibold px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
+            <button onclick="navigateTo('books')" data-page="books" class="nav-link font-semibold px-4 py-2 rounded-lg flex items-center gap-2">
                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect width="8" height="4" x="8" y="2" rx="1"></rect></svg>
                 Daftar Buku
             </button>
-            <button onclick="navigateTo('feedback')" data-page="feedback" class="nav-link font-semibold px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
+            <button onclick="navigateTo('feedback')" data-page="feedback" class="nav-link font-semibold px-4 py-2 rounded-lg flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
                 Saran & Masukan
             </button>
-            <button onclick="navigateTo('profile')" data-page="profile" class="nav-link font-semibold px-4 py-2 rounded-lg transition-colors duration-200 flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
+            <button onclick="navigateTo('profile')" data-page="profile" class="nav-link font-semibold px-4 py-2 rounded-lg flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line></svg>
                 Profil Saya
             </button>
         </nav>
@@ -219,17 +246,17 @@
             <!-- Page: Daftar Buku -->
             <div id="page-books" class="page-content hidden">
                 <!-- Search and Filter Section -->
-                <div class="mb-10 p-6 bg-white/90 backdrop-blur-sm rounded-2xl shadow-md">
+                <div class="mb-10 p-6 bg-stone-50/10 backdrop-blur-sm rounded-2xl shadow-md">
                     <div class="flex flex-col md:flex-row gap-4">
                         <div class="relative flex-grow">
                             <input type="text" id="searchInput" placeholder="Cari berdasarkan judul atau penulis..."
-                                   class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow bg-white text-gray-800">
+                                   class="w-full pl-12 pr-4 py-3 border border-stone-400 bg-stone-50/80 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-shadow text-gray-800">
                             <div class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                             </div>
                         </div>
                         <div class="relative">
-                            <select id="categoryFilter" class="w-full md:w-48 appearance-none pl-4 pr-10 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-shadow bg-white text-gray-800">
+                            <select id="categoryFilter" class="w-full md:w-48 appearance-none pl-4 pr-10 py-3 border border-stone-400 bg-stone-50/80 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-shadow text-gray-800">
                                 <option value="all">Semua Kategori</option>
                             </select>
                              <div class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
@@ -239,7 +266,9 @@
                     </div>
                 </div>
                  <!-- Book List Section -->
-                <div id="bookList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8"></div>
+                <div id="bookListContainer" class="space-y-16">
+                    <!-- Bookshelves will be rendered here by JS -->
+                </div>
                 <div id="noResults" class="hidden text-center py-12">
                     <p class="text-xl text-gray-300">Buku tidak ditemukan.</p>
                 </div>
@@ -261,7 +290,7 @@
 
     <!-- Modal for Book Details -->
     <div id="bookModal" class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 hidden">
-        <div id="modalContent" class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto p-8 relative modal-enter text-gray-800">
+        <div id="modalContent" class="bg-stone-50 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto p-8 relative modal-enter text-gray-800">
             <!-- Konten detail buku akan ditampilkan di sini -->
         </div>
     </div>
@@ -288,8 +317,8 @@
                 <!-- Content for Books Tab -->
                 <div id="contentBooks" class="admin-tab-content">
                     <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-bold">Panel Admin: Kelola Buku</h2>
-                        <button onclick="openBookForm()" class="bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-indigo-700 transition-colors flex items-center">
+                        <h2 class="text-2xl font-bold font-serif">Panel Admin: Kelola Buku</h2>
+                        <button onclick="openBookForm()" class="bg-amber-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-amber-800 transition-colors flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path><path d="M12 10v6"></path><path d="M9 13h6"></path></svg>
                             Tambah Buku
                         </button>
@@ -300,32 +329,32 @@
                 <!-- Content for Users Tab -->
                 <div id="contentUsers" class="admin-tab-content hidden">
                      <div class="flex justify-between items-center mb-6">
-                        <h2 class="text-2xl font-bold">Panel Admin: Daftar Pengguna</h2>
+                        <h2 class="text-2xl font-bold font-serif">Panel Admin: Daftar Pengguna</h2>
                     </div>
                     <div id="adminUserList" class="pr-2"></div>
                 </div>
                 
                 <!-- Content for Feedback Tab -->
                 <div id="contentFeedback" class="admin-tab-content hidden">
-                    <h2 class="text-2xl font-bold mb-6">Panel Admin: Kelola Saran & Masukan</h2>
+                    <h2 class="text-2xl font-bold font-serif">Panel Admin: Kelola Saran & Masukan</h2>
                     <div id="adminFeedbackList" class="pr-2"></div>
                 </div>
 
                 <!-- Content for Borrowed Books Tab -->
                 <div id="contentBorrowedBooks" class="admin-tab-content hidden">
-                    <h2 class="text-2xl font-bold mb-6">Panel Admin: Daftar Buku yang Sedang Dipinjam</h2>
+                    <h2 class="text-2xl font-bold font-serif">Panel Admin: Daftar Buku yang Sedang Dipinjam</h2>
                     <div id="adminBorrowedBooksList" class="pr-2"></div>
                 </div>
 
                 <!-- Content for Borrow History Tab -->
                 <div id="contentBorrowHistory" class="admin-tab-content hidden">
-                    <h2 class="text-2xl font-bold mb-6">Panel Admin: Riwayat Peminjaman</h2>
+                    <h2 class="text-2xl font-bold font-serif">Panel Admin: Riwayat Peminjaman</h2>
                     <div id="adminBorrowHistoryList" class="pr-2"></div>
                 </div>
 
                 <!-- Content for Login History Tab -->
                 <div id="contentLoginHistory" class="admin-tab-content hidden">
-                    <h2 class="text-2xl font-bold mb-6">Panel Admin: Riwayat Login</h2>
+                    <h2 class="text-2xl font-bold font-serif">Panel Admin: Riwayat Login</h2>
                     <div id="adminLoginHistoryList" class="pr-2"></div>
                 </div>
             </div>
@@ -338,7 +367,7 @@
              <button onclick="closeBookForm()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button>
-            <h2 id="bookFormTitle" class="text-2xl font-bold mb-6 text-center">Tambah Buku Baru</h2>
+            <h2 id="bookFormTitle" class="text-2xl font-bold mb-6 text-center font-serif">Tambah Buku Baru</h2>
             <form id="bookForm" class="space-y-4">
                 <input type="hidden" name="id">
                 <input type="text" name="title" placeholder="Judul Buku" required class="w-full p-3 border rounded-lg text-gray-800">
@@ -351,7 +380,7 @@
                  <!-- Cover input with preview -->
                 <div>
                     <label for="coverInput" class="block text-sm font-medium text-gray-700 mb-1">Unggah Sampul Buku</label>
-                    <input type="file" id="coverInput" name="coverFile" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer">
+                    <input type="file" id="coverInput" name="coverFile" accept="image/*" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 cursor-pointer">
                     <input type="hidden" name="cover">
                     <div class="mt-4 text-center">
                         <img id="coverPreview" src="https://placehold.co/200x300/e2e8f0/94a3b8?text=Pratinjau+Sampul" alt="Pratinjau Sampul" class="mx-auto max-h-48 w-auto object-cover rounded-lg border shadow-sm">
@@ -359,12 +388,12 @@
                 </div>
                 <div class="relative">
                     <textarea name="summary" placeholder="Sinopsis" required class="w-full p-3 border rounded-lg h-24 text-gray-800"></textarea>
-                    <button type="button" id="generateSynopsisBtn" class="absolute bottom-2 right-2 bg-purple-600 text-white text-xs font-bold py-1 px-2 rounded-md hover:bg-purple-700 transition-colors flex items-center disabled:bg-purple-400">
+                    <button type="button" id="generateSynopsisBtn" class="absolute bottom-2 right-2 bg-stone-700 text-white text-xs font-bold py-1 px-2 rounded-md hover:bg-stone-800 transition-colors flex items-center disabled:bg-stone-400">
                         <span id="synopsisBtnText">Buat Sinopsis <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline-block ml-1 -mt-1"><path d="M12 2L9 9l-7 3 7 3 3 7 3-7 7-3-7-3z"/></svg></span>
                         <svg id="synopsisSpinner" class="animate-spin h-4 w-4 text-white hidden ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24" 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                     </button>
                 </div>
-                <button id="bookFormSubmitBtn" type="submit" class="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                <button id="bookFormSubmitBtn" type="submit" class="w-full bg-amber-700 text-white font-bold py-3 px-4 rounded-lg hover:bg-amber-800 transition-colors">
                     Tambah Buku
                 </button>
             </form>
@@ -377,7 +406,7 @@
             <button onclick="closeUserHistoryModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
             </button>
-            <h2 id="userHistoryModalTitle" class="text-2xl font-bold mb-6">Riwayat Peminjaman Pengguna</h2>
+            <h2 id="userHistoryModalTitle" class="text-2xl font-bold mb-6 font-serif">Riwayat Peminjaman Pengguna</h2>
             <div id="userHistoryModalContent" class="flex-grow overflow-y-auto pr-2 space-y-3">
                 <!-- Content generated by JS -->
             </div>
@@ -387,11 +416,23 @@
     <!-- Confirmation Modal for Delete -->
     <div id="confirmDeleteModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-[80] hidden">
         <div class="bg-white rounded-2xl shadow-2xl w-full max-w-sm p-8 text-center modal-enter text-gray-800">
-            <h3 class="text-xl font-bold mb-4">Konfirmasi Hapus</h3>
+            <h3 class="text-xl font-bold mb-4 font-serif">Konfirmasi Hapus</h3>
             <p id="confirmDeleteText" class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus buku ini?</p>
             <div class="flex justify-center gap-4">
                 <button id="cancelDeleteBtn" class="bg-gray-200 text-gray-800 font-bold py-2 px-6 rounded-lg hover:bg-gray-300">Batal</button>
                 <button id="confirmDeleteBtn" class="bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700">Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Logout Confirmation -->
+    <div id="logoutModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-[80] hidden">
+        <div class="bg-stone-50 rounded-2xl shadow-2xl w-full max-w-sm p-8 text-center modal-enter text-gray-800">
+            <h3 class="text-2xl font-bold mb-4 font-serif">Sampai Jumpa Lagi!</h3>
+            <p id="logoutMessage" class="text-gray-600 mb-6">Apakah Anda yakin ingin keluar dari sesi ini?</p>
+            <div class="flex justify-center gap-4">
+                <button id="cancelLogoutBtn" class="bg-gray-200 text-gray-800 font-bold py-2 px-6 rounded-lg hover:bg-gray-300">Batal</button>
+                <button id="confirmLogoutBtn" class="bg-red-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-red-700">Keluar</button>
             </div>
         </div>
     </div>
@@ -404,7 +445,7 @@
     <!-- Notifications Panel -->
     <div id="notificationsPanel" class="absolute top-20 right-4 sm:right-6 lg:right-8 w-full max-w-sm bg-white text-gray-800 rounded-2xl shadow-xl border hidden z-[85]">
         <div class="p-4 border-b">
-            <h3 class="font-bold">Notifikasi</h3>
+            <h3 class="font-bold font-serif">Notifikasi</h3>
         </div>
         <div id="notificationList" class="p-2 max-h-80 overflow-y-auto">
             <!-- Notifications will be rendered here -->
@@ -428,8 +469,23 @@
         let books = [
             { id: 1, title: "Laskar Pelangi", author: "Andrea Hirata", year: 2005, pages: 529, category: "Fiksi", cover: "https://placehold.co/400x600/6366f1/ffffff?text=Laskar+Pelangi", summary: "Kisah inspiratif tentang perjuangan 10 anak dari keluarga miskin yang bersekolah di sebuah sekolah Muhammadiyah di Belitung yang penuh dengan keterbatasan.", status: "available", borrowedBy: null, borrowedAt: null },
             { id: 2, title: "Bumi Manusia", author: "Pramoedya Ananta Toer", year: 1980, pages: 535, category: "Sejarah", cover: "https://placehold.co/400x600/ec4899/ffffff?text=Bumi+Manusia", summary: "Novel ini menceritakan tentang perjalanan seorang pemuda Jawa bernama Minke di akhir abad ke-19, di tengah pusaran perubahan sosial dan politik Hindia Belanda.", status: "available", borrowedBy: null, borrowedAt: null },
-            { id: 3, title: "Cantik Itu Luka", author: "Eka Kurniawan", year: 2002, pages: 480, category: "Fiksi", cover: "https://placehold.co/400x600/f59e0b/ffffff?text=Cantik+Itu+Luka", summary: "Sebuah epik keluarga yang membentang dari zaman kolonial hingga kemerdekaan, memadukan sejarah, mitos, dan kekerasan dengan gaya realisme magis.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 3, title: "Cantik Itu Luka", author: "Eka Kurniawan", year: 2002, pages: 480, category: "Sastra", cover: "https://placehold.co/400x600/f59e0b/ffffff?text=Cantik+Itu+Luka", summary: "Sebuah epik keluarga yang membentang dari zaman kolonial hingga kemerdekaan, memadukan sejarah, mitos, dan kekerasan dengan gaya realisme magis.", status: "available", borrowedBy: null, borrowedAt: null },
             { id: 6, title: "Negeri 5 Menara", author: "Ahmad Fuadi", year: 2009, pages: 423, category: "Fiksi", cover: "https://placehold.co/400x600/3b82f6/ffffff?text=Negeri+5+Menara", summary: "Kisah tentang Alif, seorang anak dari Minangkabau yang merantau ke Pondok Madani di Jawa Timur dan menemukan arti persahabatan serta impian.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 7, title: "Ronggeng Dukuh Paruk", author: "Ahmad Tohari", year: 1982, pages: 400, category: "Sastra", cover: "https://placehold.co/400x600/84cc16/ffffff?text=Ronggeng+Dukuh+Paruk", summary: "Kisah tentang Srintil, seorang penari ronggeng di dusun kecil yang terpencil, dan lika-liku kehidupannya yang terjalin dengan peristiwa politik tragis di Indonesia.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 8, title: "Laut Bercerita", author: "Leila S. Chudori", year: 2017, pages: 379, category: "Fiksi Sejarah", cover: "https://placehold.co/400x600/22d3ee/ffffff?text=Laut+Bercerita", summary: "Sebuah novel yang menyuarakan kisah para aktivis mahasiswa yang hilang pada tahun 1998, diceritakan dari sudut pandang Biru Laut dan keluarganya yang mencari kebenaran.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 9, title: "Gadis Kretek", author: "Ratih Kumala", year: 2012, pages: 274, category: "Fiksi Sejarah", cover: "https://placehold.co/400x600/a855f7/ffffff?text=Gadis+Kretek", summary: "Mengungkap sejarah industri kretek di Indonesia melalui pencarian seorang sekarat akan Jeng Yah, seorang perempuan misterius dari masa lalunya.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 10, title: "Dilan: Dia adalah Dilanku Tahun 1990", author: "Pidi Baiq", year: 2014, pages: 332, category: "Romantis", cover: "https://placehold.co/400x600/fb7185/ffffff?text=Dilan+1990", summary: "Kisah cinta remaja antara Dilan dan Milea di Bandung pada tahun 1990-an dengan gaya bahasa yang unik dan gombalan yang khas.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 11, title: "Geez & Ann", author: "Rintik Sedu", year: 2017, pages: 328, category: "Romantis", cover: "https://placehold.co/400x600/c084fc/ffffff?text=Geez+%26+Ann", summary: "Kisah cinta jarak jauh antara Geez dan Ann yang penuh dengan rindu, komitmen, dan tantangan yang menguji hubungan mereka.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 12, title: "Mariposa", author: "Luluk HF", year: 2018, pages: 484, category: "Romantis", cover: "https://placehold.co/400x600/60a5fa/ffffff?text=Mariposa", summary: "Kisah Acha yang berusaha mendapatkan hati Iqbal, seorang laki-laki dingin dan pintar yang sulit didekati, layaknya kupu-kupu Mariposa.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 13, title: "Antares", author: "Ravaluc", year: 2020, pages: 344, category: "Fiksi Remaja", cover: "https://placehold.co/400x600/f87171/ffffff?text=Antares", summary: "Kisah Zea yang tanpa sengaja terlibat dalam kehidupan Antares, ketua geng motor Calderioz, yang membawanya ke dalam dunia yang penuh bahaya dan romansa.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 14, title: "Santri Pilihan Bunda", author: "Sisca H. P.", year: 2021, pages: 368, category: "Religi", cover: "https://placehold.co/400x600/4ade80/ffffff?text=Santri+Pilihan+Bunda", summary: "Cerita tentang Aliza, seorang mahasiswi yang harus menerima perjodohan dengan Kinaan, seorang santri pilihan ibunya, dan belajar untuk saling menerima.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 15, title: "Wingit", author: "Sara Wijayanto", year: 2021, pages: 200, category: "Horor", cover: "https://placehold.co/400x600/4b5563/ffffff?text=Wingit", summary: "Kumpulan cerita horor berdasarkan pengalaman Sara Wijayanto dalam berinteraksi dengan makhluk tak kasat mata di berbagai tempat angker.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 16, title: "Sumur", author: "Eka Kurniawan", year: 2021, pages: 120, category: "Horor", cover: "https://placehold.co/400x600/1e293b/ffffff?text=Sumur", summary: "Sebuah novel pendek yang mencekam tentang teror yang datang dari sebuah sumur tua di belakang rumah, menggali ketakutan yang paling dalam.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 17, title: "Si Putih", author: "Tere Liye", year: 2021, pages: 432, category: "Fantasi", cover: "https://placehold.co/400x600/e2e8f0/1e293b?text=Si+Putih", summary: "Bagian dari serial Bumi karya Tere Liye, menceritakan petualangan Si Putih, seekor kucing kuno dari Klan Bulan, dalam dunia paralel yang penuh keajaiban.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 18, title: "Kekasih Musim Gugur", author: "Laksmi Pamuntjak", year: 2020, pages: 400, category: "Romantis", cover: "https://placehold.co/400x600/f97316/ffffff?text=Kekasih+Musim+Gugur", summary: "Kisah cinta yang kompleks antara Sael, seorang pembuat peta, dan Maya, seorang seniman, yang terbentang melintasi waktu dan geografi.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 19, title: "The Midnight Library", author: "Matt Haig", year: 2020, pages: 304, category: "Misteri", cover: "https://placehold.co/400x600/14b8a6/ffffff?text=The+Midnight+Library", summary: "Antara hidup dan mati, ada sebuah perpustakaan di mana setiap buku menawarkan kesempatan untuk mencoba kehidupan lain yang mungkin bisa dijalani.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 20, title: "Pembunuhan di Nihonbashi", author: "Keigo Higashino", year: 2011, pages: 352, category: "Misteri", cover: "https://placehold.co/400x600/9333ea/ffffff?text=Pembunuhan+di+Nihonbashi", summary: "Detektif Kaga Kyoichiro menyelidiki kasus pembunuhan yang rumit di distrik Nihonbashi, Tokyo, di mana setiap petunjuk terhubung dengan toko-toko tradisional di sana.", status: "available", borrowedBy: null, borrowedAt: null },
+            { id: 21, title: "Perahu Kertas", author: "Dee Lestari", year: 2009, pages: 444, category: "Fantasi", cover: "https://placehold.co/400x600/3b82f6/ffffff?text=Perahu+Kertas", summary: "Kisah tentang Kugy, seorang gadis yang percaya pada dongeng dan perahu kertas, dan Keenan, seorang pelukis berbakat, dalam perjalanan mereka menemukan cinta dan impian.", status: "available", borrowedBy: null, borrowedAt: null }
         ];
         
         let feedback = [
@@ -458,7 +514,7 @@
         const pageFeedback = document.getElementById('page-feedback');
         const pageProfile = document.getElementById('page-profile');
         
-        const bookListComponent = document.getElementById('bookList');
+        const bookListContainer = document.getElementById('bookListContainer');
         const searchInput = document.getElementById('searchInput');
         const categoryFilter = document.getElementById('categoryFilter');
         const noResults = document.getElementById('noResults');
@@ -498,6 +554,11 @@
 
         const notificationsPanel = document.getElementById('notificationsPanel');
         const notificationList = document.getElementById('notificationList');
+        
+        const logoutModal = document.getElementById('logoutModal');
+        const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
+        const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
+        const logoutMessage = document.getElementById('logoutMessage');
 
         // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -545,6 +606,9 @@
                 }
                 confirmDeleteModal.classList.add('hidden');
             });
+            
+            cancelLogoutBtn.addEventListener('click', closeLogoutModal);
+            confirmLogoutBtn.addEventListener('click', confirmLogout);
 
             // Close notifications panel if clicked outside
             document.addEventListener('click', function(event) {
@@ -579,8 +643,8 @@
                                 <span id="notificationBadge" class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs font-semibold text-white hidden"></span>
                             </button>
                         </div>
-                        ${currentUser.role === 'admin' ? `<button onclick="openAdminPanel()" class="text-sm font-semibold text-yellow-400 hover:text-yellow-300 transition-colors">[Panel Admin]</button>` : ''}
-                        <button onclick="logout()" class="text-sm font-semibold text-red-400 hover:text-red-300 transition-colors">Logout</button>
+                        ${currentUser.role === 'admin' ? `<button onclick="openAdminPanel()" class="text-sm font-semibold text-amber-400 hover:text-amber-300 transition-colors">[Panel Admin]</button>` : ''}
+                        <button onclick="logout()" title="Logout" class="text-gray-300 hover:text-white transition-colors"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg></button>
                     </div>
                 `;
                 
@@ -612,13 +676,25 @@
             loginContainer.classList.remove('opacity-0', 'pointer-events-none');
             registerForm.reset();
         }
+        
         function logout() {
+            logoutMessage.textContent = `Apakah Anda yakin ingin keluar, ${currentUser.username}? Buku-buku akan menantimu kembali!`;
+            logoutModal.classList.remove('hidden');
+        }
+        window.logout = logout;
+
+        function closeLogoutModal() {
+            logoutModal.classList.add('hidden');
+        }
+
+        function confirmLogout() {
             currentUser = null;
             authOverlay.classList.remove('hidden');
             appContainer.classList.add('hidden');
             loginForm.reset();
+            closeLogoutModal();
+            showToast("Anda telah berhasil keluar.");
         }
-        window.logout = logout;
 
 
         // --- UI & HELPERS ---
@@ -651,7 +727,7 @@
                 notificationList.innerHTML = `<p class="p-4 text-center text-sm text-gray-500">Tidak ada notifikasi baru.</p>`;
             } else {
                 notificationList.innerHTML = userNotifications.map(n => `
-                    <div class="p-3 border-b last:border-b-0 ${!n.read ? 'bg-indigo-50' : ''} hover:bg-gray-100 rounded-md">
+                    <div class="p-3 border-b last:border-b-0 ${!n.read ? 'bg-amber-50' : ''} hover:bg-gray-100 rounded-md">
                         <p class="text-sm">${n.message}</p>
                         <p class="text-xs text-gray-400 mt-1">${new Date(n.timestamp).toLocaleString('id-ID')}</p>
                     </div>
@@ -718,21 +794,21 @@
             
             pageHome.innerHTML = `
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-white">${welcomeMessage}</h2>
+                    <h2 class="text-3xl font-bold text-white font-serif">${welcomeMessage}</h2>
                 </div>
 
                 <!-- Bagian Buku Pilihan Hari Ini -->
                 <div class="mb-16">
-                    <div class="bg-gradient-to-br from-indigo-800 to-purple-900 p-8 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-8 text-white">
+                    <div class="bg-gradient-to-br from-yellow-900 via-amber-900 to-yellow-950 p-8 rounded-3xl shadow-2xl flex flex-col md:flex-row items-center gap-8 text-white">
                         <div class="md:w-1/3 text-center">
                             <img src="${bookOfTheDay.cover}" alt="Sampul ${bookOfTheDay.title}" class="w-52 h-auto object-cover rounded-lg shadow-xl mx-auto transform hover:scale-105 transition-transform duration-300">
                         </div>
                         <div class="md:w-2/3 text-center md:text-left">
-                            <h2 class="text-yellow-300 font-bold text-xl mb-2">Buku Pilihan Hari Ini</h2>
-                            <h3 class="text-4xl font-bold mb-3">${bookOfTheDay.title}</h3>
-                            <p class="text-lg text-indigo-200 mb-4">oleh ${bookOfTheDay.author}</p>
-                            <p class="mb-6 text-indigo-100 leading-relaxed">${bookOfTheDay.summary.substring(0, 150)}...</p>
-                            <button onclick="openBookModal(${bookOfTheDay.id})" class="bg-yellow-400 text-indigo-900 font-bold py-3 px-6 rounded-lg hover:bg-yellow-300 transition-colors shadow-lg">
+                            <h2 class="text-amber-300 font-bold text-xl mb-2 font-serif">Buku Pilihan Hari Ini</h2>
+                            <h3 class="text-4xl font-bold mb-3 font-serif">${bookOfTheDay.title}</h3>
+                            <p class="text-lg text-amber-200 mb-4">oleh ${bookOfTheDay.author}</p>
+                            <p class="mb-6 text-amber-100 leading-relaxed">${bookOfTheDay.summary.substring(0, 150)}...</p>
+                            <button onclick="openBookModal(${bookOfTheDay.id})" class="bg-amber-400 text-amber-900 font-bold py-3 px-6 rounded-lg hover:bg-amber-300 transition-colors shadow-lg">
                                 Baca Sekarang
                             </button>
                         </div>
@@ -741,13 +817,13 @@
 
                 <div class="space-y-12">
                     <div>
-                        <h2 class="text-3xl font-bold mb-6 text-white">Buku Baru</h2>
+                        <h2 class="text-3xl font-bold mb-6 text-white font-serif">Buku Baru</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                             ${recentlyAdded.map(book => `
-                                <div class="book-card bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg cursor-pointer" onclick="openBookModal(${book.id})">
+                                <div class="book-card bg-stone-50/90 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg cursor-pointer" onclick="openBookModal(${book.id})">
                                     <img src="${book.cover}" alt="Sampul ${book.title}" class="w-full h-64 object-cover">
                                     <div class="p-4 text-gray-800">
-                                        <h3 class="font-bold truncate">${book.title}</h3>
+                                        <h3 class="font-bold truncate font-serif">${book.title}</h3>
                                         <p class="text-sm text-gray-600">${book.author}</p>
                                     </div>
                                 </div>
@@ -755,13 +831,13 @@
                         </div>
                     </div>
                      <div>
-                        <h2 class="text-3xl font-bold mb-6 text-white">Paling Populer</h2>
+                        <h2 class="text-3xl font-bold mb-6 text-white font-serif">Paling Populer</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                             ${mostPopular.map(book => `
-                                <div class="book-card bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg cursor-pointer" onclick="openBookModal(${book.id})">
+                                <div class="book-card bg-stone-50/90 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg cursor-pointer" onclick="openBookModal(${book.id})">
                                     <img src="${book.cover}" alt="Sampul ${book.title}" class="w-full h-64 object-cover">
                                     <div class="p-4 text-gray-800">
-                                        <h3 class="font-bold truncate">${book.title}</h3>
+                                        <h3 class="font-bold truncate font-serif">${book.title}</h3>
                                         <p class="text-sm text-gray-600">${book.author}</p>
                                     </div>
                                 </div>
@@ -777,8 +853,8 @@
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                     <!-- Feedback Submission Form -->
                     <div class="lg:col-span-1">
-                        <div class="p-8 bg-white/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800">
-                            <h2 class="text-2xl font-bold mb-6">Kirim Masukan Anda</h2>
+                        <div class="p-8 bg-stone-50/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800">
+                            <h2 class="text-2xl font-bold mb-6 font-serif">Kirim Masukan Anda</h2>
                             <form id="feedbackForm" class="space-y-4">
                                 <div>
                                     <label for="feedbackCategory" class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
@@ -793,7 +869,7 @@
                                     <label for="feedbackMessage" class="block text-sm font-medium text-gray-700 mb-1">Pesan Anda</label>
                                     <textarea id="feedbackMessage" name="message" rows="5" required placeholder="Tuliskan saran atau masukan Anda di sini..." class="w-full p-3 border border-gray-300 rounded-lg"></textarea>
                                 </div>
-                                <button type="submit" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors">
+                                <button type="submit" class="w-full bg-amber-700 text-white font-bold py-3 px-4 rounded-lg hover:bg-amber-800 transition-colors">
                                     Kirim Masukan
                                 </button>
                             </form>
@@ -802,7 +878,7 @@
 
                     <!-- Feedback List -->
                     <div class="lg:col-span-2">
-                         <h2 class="text-3xl font-bold mb-6 text-white">Daftar Saran & Masukan</h2>
+                         <h2 class="text-3xl font-bold mb-6 text-white font-serif">Daftar Saran & Masukan</h2>
                          <div id="feedbackListContainer" class="space-y-4">
                             <!-- Feedback items will be rendered here -->
                          </div>
@@ -818,7 +894,7 @@
             if (!container) return;
 
             if (feedback.length === 0) {
-                container.innerHTML = `<div class="p-8 bg-white/90 backdrop-blur-sm rounded-2xl text-center text-gray-500"><p>Belum ada saran atau masukan yang dikirim.</p></div>`;
+                container.innerHTML = `<div class="p-8 bg-stone-50/90 backdrop-blur-sm rounded-2xl text-center text-gray-500"><p>Belum ada saran atau masukan yang dikirim.</p></div>`;
                 return;
             }
 
@@ -833,7 +909,7 @@
                 const currentStatus = statusInfo[item.status] || statusInfo['new'];
 
                 return `
-                    <div class="p-6 bg-white/90 backdrop-blur-sm rounded-2xl shadow-sm text-gray-800">
+                    <div class="p-6 bg-stone-50/90 backdrop-blur-sm rounded-2xl shadow-sm text-gray-800">
                         <div class="flex justify-between items-start mb-3">
                             <div>
                                 <p class="font-bold text-lg">${item.username}</p>
@@ -878,20 +954,20 @@
             
             pageProfile.innerHTML = `
                 <div class="max-w-4xl mx-auto space-y-8">
-                    <div class="p-8 bg-white/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800">
+                    <div class="p-8 bg-stone-50/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800">
                         <div class="flex items-center space-x-6">
-                            <div class="w-24 h-24 bg-indigo-500 rounded-full flex items-center justify-center text-white text-4xl font-bold">
+                            <div class="w-24 h-24 bg-amber-700 rounded-full flex items-center justify-center text-white text-4xl font-bold">
                                 ${currentUser.username.charAt(0).toUpperCase()}
                             </div>
                             <div>
-                                <h2 class="text-3xl font-bold">${currentUser.username}</h2>
+                                <h2 class="text-3xl font-bold font-serif">${currentUser.username}</h2>
                                 <p class="text-gray-500 capitalize">${currentUser.role}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="p-8 bg-white/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800">
-                        <h3 class="text-2xl font-bold mb-4">Statistik Saya</h3>
+                    <div class="p-8 bg-stone-50/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800">
+                        <h3 class="text-2xl font-bold mb-4 font-serif">Statistik Saya</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="text-center p-4 bg-gray-100 rounded-lg">
                                 <p class="text-3xl font-bold">${currentlyBorrowed.length}</p>
@@ -903,21 +979,21 @@
                             </div>
                             <div class="text-center p-4 bg-orange-100 rounded-lg text-orange-800">
                                 <p class="text-3xl font-bold flex items-center justify-center gap-2">
-                                    ${readingStreak} <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500"><path d="M14.5 4.5c.9-.9 2.1-.9 3 0s.9 2.1 0 3L13 12V8.5C13 7 14.5 4.5 14.5 4.5z"/><path d="M10.5 9.5c.9-.9 2.1-.9 3 0s.9 2.1 0 3L9 17v-4.5c0-1.5 1.5-4 1.5-4z"/><path d="M18 12.5c.9-.9 2.1-.9 3 0s.9 2.1 0 3l-3.5 3.5c-.9.9-2.1.9-3 0s-.9-2.1 0-3l3.5-3.5z"/><path d="M6.5 17.5c.9-.9 2.1-.9 3 0s.9 2.1 0 3L6 24l-3-3 3.5-3.5z"/></svg>
+                                    ${readingStreak} <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-orange-500"><path d="M14.5 4.5c.9-.9 2.1-.9 3 0s.9 2.1 0 3L13 12V8.5C13 7 14.5 4.5 14.5 4.5z"/><path d="M10.5 9.5c.9-.9 2.1-.9 3 0s.9 2.1 0 3L9 17v-4.5c0-1.5 1.5-4 1.5-4z"/><path d="M18 12.5c.9-.9 2.1-.9 3 0s.9 2.1 0 3l-3.5 3.5c-.9.9-2.1.9-3 0s-.9-2.1 0-3l3.5-3.5z"/><path d="M6.5 17.5c.9-.9 2.1-.9 3 0s.9 2.1 0 3L6 24l-3-3 3.5-3.5z"/></svg>
                                 </p>
                                 <p class="text-orange-600">Rentetan Membaca (Hari)</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="p-8 bg-white/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800">
-                        <h3 class="text-2xl font-bold mb-4">Buku yang Sedang Saya Pinjam</h3>
+                    <div class="p-8 bg-stone-50/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800">
+                        <h3 class="text-2xl font-bold mb-4 font-serif">Buku yang Sedang Saya Pinjam</h3>
                         ${currentlyBorrowed.length > 0 ? `
                             <div class="space-y-4">
                                 ${currentlyBorrowed.map(book => `
                                     <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                                         <div>
-                                            <p class="font-semibold">${book.title}</p>
+                                            <p class="font-semibold font-serif">${book.title}</p>
                                             <p class="text-sm text-gray-500">oleh ${book.author}</p>
                                             <p class="text-xs text-gray-500 mt-1">Dipinjam pada: ${new Date(book.borrowedAt).toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
                                         </div>
@@ -930,13 +1006,13 @@
                         `}
                     </div>
 
-                    <div class="p-8 bg-white/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800">
-                        <h3 class="text-2xl font-bold mb-4">Riwayat Peminjaman Saya</h3>
+                    <div class="p-8 bg-stone-50/90 backdrop-blur-sm rounded-2xl shadow-md text-gray-800">
+                        <h3 class="text-2xl font-bold mb-4 font-serif">Riwayat Peminjaman Saya</h3>
                         ${userBorrowHistory.length > 0 ? `
                             <div class="space-y-4">
                                 ${userBorrowHistory.map(item => `
                                     <div class="p-4 bg-gray-50 rounded-lg">
-                                        <p class="font-semibold">${item.bookTitle}</p>
+                                        <p class="font-semibold font-serif">${item.bookTitle}</p>
                                         <div class="text-xs text-gray-500 mt-1 grid grid-cols-1 sm:grid-cols-2 gap-1">
                                             <span>Dipinjam: ${new Date(item.borrowedAt).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
                                             <span>Dikembalikan: ${new Date(item.returnedAt).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
@@ -975,22 +1051,39 @@
                 return (titleMatch || authorMatch) && categoryMatch;
             });
 
-            bookListComponent.innerHTML = '';
+            bookListContainer.innerHTML = ''; // Ganti ke container baru
             if (filteredBooks.length > 0) {
                 noResults.classList.add('hidden');
-                filteredBooks.forEach(book => {
-                    const card = document.createElement('div');
-                    card.className = 'book-card bg-white/90 backdrop-blur-sm rounded-2xl overflow-hidden shadow-lg cursor-pointer';
-                    card.onclick = () => openBookModal(book.id);
-                    card.innerHTML = `
-                        <img src="${book.cover}" alt="Sampul ${book.title}" class="w-full h-64 object-cover">
-                        <div class="p-4 text-gray-800">
-                            <h3 class="font-bold truncate">${book.title}</h3>
-                            <p class="text-sm text-gray-600">${book.author}</p>
+                
+                let shelfHTML = '<div class="bookshelf">';
+                filteredBooks.forEach((book, index) => {
+                    const isNew = book.id > 15; // Logika untuk buku baru
+                    const isPopular = [2, 8, 12, 19].includes(book.id); // Logika untuk buku populer
+
+                    shelfHTML += `
+                        <div class="book-card bg-stone-50/90 backdrop-blur-sm rounded-lg overflow-hidden shadow-lg cursor-pointer group relative" onclick="openBookModal(${book.id})">
+                            ${isNew ? `<div class="absolute top-2 left-2 bg-green-600 text-white text-xs font-bold px-2 py-1 rounded-full z-10">BARU</div>` : ''}
+                            ${isPopular ? `<div class="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded-full z-10">POPULER</div>` : ''}
+                            
+                            <img src="${book.cover}" alt="Sampul ${book.title}" class="w-full h-64 object-cover">
+                            
+                            <div class="p-4 text-gray-800 relative z-10 bg-stone-50/90">
+                                <h3 class="font-bold truncate font-serif">${book.title}</h3>
+                                <p class="text-sm text-gray-600">${book.author}</p>
+                            </div>
+                            
+                            <!-- Overlay Info Cepat -->
+                            <div class="absolute inset-0 bg-black/70 flex flex-col justify-center items-center text-center p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <h4 class="font-bold font-serif">${book.category}</h4>
+                                <p class="text-sm mt-1">${book.pages} halaman</p>
+                                <button class="mt-4 bg-amber-600 px-3 py-1 rounded-full text-sm">Lihat Detail</button>
+                            </div>
                         </div>
                     `;
-                    bookListComponent.appendChild(card);
                 });
+                shelfHTML += '</div>';
+                bookListContainer.innerHTML = shelfHTML;
+
             } else {
                 noResults.classList.remove('hidden');
             }
@@ -1002,7 +1095,7 @@
 
             let actionButton = '';
             if (book.status === 'available') {
-                actionButton = `<button onclick="borrowBook(${book.id})" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors">Pinjam Buku</button>`;
+                actionButton = `<button onclick="borrowBook(${book.id})" class="w-full bg-amber-700 text-white font-bold py-3 px-4 rounded-lg hover:bg-amber-800 transition-colors">Pinjam Buku</button>`;
             } else if (book.borrowedBy === currentUser.username) {
                 actionButton = `<button onclick="returnBook(${book.id})" class="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors">Kembalikan Buku</button>`;
             } else {
@@ -1018,7 +1111,7 @@
                         <img src="${book.cover}" alt="Sampul ${book.title}" class="w-full h-auto object-cover rounded-lg shadow-lg">
                     </div>
                     <div class="flex flex-col md:w-2/3">
-                        <h2 class="text-3xl font-bold mb-1">${book.title}</h2>
+                        <h2 class="text-3xl font-bold mb-1 font-serif">${book.title}</h2>
                         <p class="text-lg text-gray-600 mb-2">oleh ${book.author} (${book.year})</p>
                         <div class="flex items-center gap-4 text-sm text-gray-500 mb-4">
                             <span>${book.category}</span>
@@ -1146,7 +1239,7 @@
             adminUserList.innerHTML = '';
             users.forEach(user => {
                 const borrowCount = borrowHistory.filter(h => h.username === user.username && h.returnedAt).length;
-                const actions = user.role !== 'admin' ? `<button onclick="openUserHistoryModal('${user.username}')" class="text-sm text-indigo-600 hover:underline">Lihat Riwayat</button>` : '';
+                const actions = user.role !== 'admin' ? `<button onclick="openUserHistoryModal('${user.username}')" class="text-sm text-amber-700 hover:underline">Lihat Riwayat</button>` : '';
                 adminUserList.innerHTML += `
                      <div class="p-3 grid grid-cols-4 gap-4 items-center border-b last:border-b-0">
                         <p class="font-bold">${user.username}</p>
@@ -1172,7 +1265,7 @@
                                 <p class="text-xs text-gray-500">${new Date(item.timestamp).toLocaleString('id-ID')}</p>
                             </div>
                             <div class="flex items-center gap-2">
-                                <select onchange="updateFeedbackStatus(${item.id}, this.value)" class="text-xs border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                                <select onchange="updateFeedbackStatus(${item.id}, this.value)" class="text-xs border-gray-300 rounded-md shadow-sm focus:border-amber-300 focus:ring focus:ring-amber-200 focus:ring-opacity-50">
                                     <option value="new" ${item.status === 'new' ? 'selected' : ''}>Baru</option>
                                     <option value="read" ${item.status === 'read' ? 'selected' : ''}>Dibaca</option>
                                     <option value="in_progress" ${item.status === 'in_progress' ? 'selected' : ''}>Dikerjakan</option>
@@ -1272,10 +1365,10 @@
         function switchTab(tabName) {
             adminTabs.forEach(tab => {
                 if(tab.id === `tab${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`) {
-                    tab.classList.add('border-indigo-500', 'text-indigo-600');
+                    tab.classList.add('border-amber-600', 'text-amber-700');
                     tab.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
                 } else {
-                    tab.classList.remove('border-indigo-500', 'text-indigo-600');
+                    tab.classList.remove('border-amber-600', 'text-amber-700');
                     tab.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
                 }
             });
